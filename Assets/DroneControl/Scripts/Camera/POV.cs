@@ -3,24 +3,33 @@ using System.Collections;
 
 public class POV : MonoBehaviour {
 
-	public float interpVelocity;
-	public float minDistance;
-	public float followDistance;
-	public GameObject target;
-	public Vector3 offset;
-	Vector3 targetPos;
-	// Use this for initialization
-	void Start () {
-		targetPos = transform.position;
+	public GameObject player;
+
+	private Vector3 offset;
+	private Vector3 pos;
+	private Quaternion rotation;
+
+
+	void Start ()
+	{
+		offset = transform.position - player.transform.position;
 	}
 
-	// Update is called once per frame
-	void FixedUpdate () {
-		if (target)
-		{
+	void LateUpdate ()
+	{
 
-			transform.position = Vector3.Lerp( transform.position, targetPos + offset, 0.25f);
+		pos = player.transform.position;
 
-		}
+		pos.x = player.transform.position.x + offset.x;
+		pos.y = player.transform.position.y + offset.y;
+
+		rotation = Quaternion.Euler(0.0f, player.transform.rotation.eulerAngles.y, 0.0f);
+
+		this.transform.position = pos;
+		this.transform.rotation = rotation;
+
+
 	}
+
+
 }
