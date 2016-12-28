@@ -601,8 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661c440469c754d41b7c6ab3d3502903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PitchLimit: 45
-  RollLimit: 45
+  PitchLimit: 15
+  RollLimit: 15
   PidThrottle:
     pFactor: 1
     iFactor: 0.1
@@ -905,7 +905,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881421b81580f2949a591b4dabc29f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
+  range: 5
+  objective: {fileID: 0}
 --- !u!124 &124000011277201404
 Behaviour:
   m_ObjectHideFlags: 1
