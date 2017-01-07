@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Sensing : MonoBehaviour {
 
+	//distancia a la que detecta objetos
 	public float range;
 	public Transform objective;
 
@@ -10,12 +11,14 @@ public class Sensing : MonoBehaviour {
 	private float speed = 0.0f;
 
 	void FixedUpdate () {
+		//sensores
 		RaycastHit delante;
 		RaycastHit arriba;
 		RaycastHit izquierda;
 		RaycastHit derecha;
 		RaycastHit atras;
 		RaycastHit debajo;
+		//para coger la velocidad a la que va el drone
 		Rigidbody drone;
 
 		drone = this.GetComponentInParent<Rigidbody> ();
@@ -31,6 +34,7 @@ public class Sensing : MonoBehaviour {
 		print("objetivo a distancia: " + distance);
 		//enviar distancia al controlador AI
 
+		//para pintar las rayitas del sensor
 		Debug.DrawRay (transform.position, transform.forward * range);
 
 		if (Physics.Raycast(transform.position, transform.forward, out delante, range))

@@ -10,18 +10,22 @@ public class Controller : MonoBehaviour {
 
     public enum ThrottleMode { None, LockHeight};
 
+	//subir y bajar con W y S
 	[Header("Throttle command")]
 	public string ThrottleCommand = "Throttle";
-	public bool InvertThrottle = true;
+	public bool InvertThrottle = true; 
 
-    [Header("Yaw Command")]
+	//rotar con A y D
+    [Header("Yaw Command")] 
 	public string YawCommand = "Yaw";
 	public bool InvertYaw = false;
 
+	// inclinar hacia delante y hacia detras con la I y la K
 	[Header("Pitch Command")]
 	public string PitchCommand = "Pitch";
 	public bool InvertPitch = true;
 
+	//inclinar iz y dcha con J y L
 	[Header("Roll Command")]
 	public string RollCommand = "Roll";
 	public bool InvertRoll = true;
