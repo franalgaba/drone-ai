@@ -40,10 +40,10 @@ public class Write : MonoBehaviour {
 		}
 
 		//se puede poner otro contador para que cuando escriba X numero de lineas haga un flush
-		if (Input.GetKeyDown (KeyCode.C)) { 
+		if ((Contador%30) == 0) { 
 			sw.Flush(); 
 			sw.WriteLine ("Hago un flush");
-			sigue = !sigue;
+			//sigue = !sigue;
 		}	
 	}
 

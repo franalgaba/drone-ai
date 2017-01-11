@@ -13,18 +13,16 @@ public class servidorEchoUDP {
 		String mRecibido;
 		DatagramPacket packet0;
 		DatagramPacket packet1; 
-		
+		DatagramSocket udpSocket;
 		try {
 			// Create a udp socket for sending and receiving datagrams in serverPort
-			DatagramSocket udpSocket;
 			udpSocket = new DatagramSocket(serverPort);
 			
 			System.out.println("Server: waiting for new datagrams...");
 			buf = new byte[300];
 			packet0 = new DatagramPacket(buf, buf.length);
 			while (true) {
-				
-				
+								
 				System.out.println("Esperando a recibir.");
 				// Receive the datagram from client
 				udpSocket.receive(packet0);
@@ -33,15 +31,15 @@ public class servidorEchoUDP {
 				int clientPort = packet0.getPort();		
 				
 				mRecibido =  new String(packet0.getData());
-				System.out.print("El ECHO recibido es: ");
-				System.out.println(mRecibido);	
+				System.out.println("El ECHO recibido es: " + mRecibido);
 				
 				// Salgo del While si el mensaje que envio al servidor es null o stop.
 				if (mRecibido.equals(null) || mRecibido.equals("stop") ) { 
 					System.out.println("Las comunicaciones han finalizado");
 					break;}
 				
-				System.out.println("Enviando el mensaje al cliente");
+				mRecibido = mRecibido.replace('a', 'A');
+				System.out.println("Enviando el mensaje al cliente: " + mRecibido);
 				buf = mRecibido.getBytes();
 				packet1 = new DatagramPacket(buf, buf.length, clientAddress,clientPort);
 				// Send the datagram packet to client

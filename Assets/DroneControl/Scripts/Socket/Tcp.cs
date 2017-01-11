@@ -5,10 +5,6 @@ using System.Net.Sockets;
 using System.IO;
 using System;
 
-
-
-
-
 public class Tcp : MonoBehaviour {
 
 	private TcpClient tcpClient;
