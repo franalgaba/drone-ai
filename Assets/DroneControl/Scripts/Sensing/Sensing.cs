@@ -10,16 +10,18 @@ public class Sensing : MonoBehaviour {
 	private float distance = 0.0f;
 	private float speed = 0.0f;
 
-	void FixedUpdate () {
-		//sensores
-		RaycastHit delante;
-		RaycastHit arriba;
-		RaycastHit izquierda;
-		RaycastHit derecha;
-		RaycastHit atras;
-		RaycastHit debajo;
-		//para coger la velocidad a la que va el drone
-		Rigidbody drone;
+	//sensores
+	private RaycastHit delante;
+	private RaycastHit arriba;
+	private RaycastHit izquierda;
+	private RaycastHit derecha;
+	private RaycastHit atras;
+	private RaycastHit debajo;
+	//para coger la velocidad a la que va el drone
+	private Rigidbody drone;
+
+
+	void FixedUpdate () {		
 
 		drone = this.GetComponentInParent<Rigidbody> ();
 		speed = drone.velocity.magnitude;
