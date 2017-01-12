@@ -4,7 +4,11 @@ using UnityEngine.Networking;
 
 public class BasicControl : MonoBehaviour {
 
-	[Header("Control")]
+
+    [Header("Limites")]
+    public float speedLimit;
+
+    [Header("Control")]
 	public Controller Controller;
 	public float ThrottleIncrease;
 	
@@ -15,6 +19,8 @@ public class BasicControl : MonoBehaviour {
     [Header("Internal")]
     public ComputerModule Computer;
 
+    private Rigidbody rb;
+
 	void FixedUpdate() {
         Computer.UpdateComputer(Controller.Pitch, Controller.Roll, Controller.Throttle * ThrottleIncrease);
         ThrottleValue = Computer.HeightCorrection;
@@ -22,7 +28,16 @@ public class BasicControl : MonoBehaviour {
         if (Computer != null)
             Computer.UpdateGyro();
         ComputeMotorSpeeds();
-	}
+
+        //no se si funciona
+        /*rb = GetComponent<Rigidbody>();
+
+        if (rb.velocity.magnitude > speedLimit)
+        {
+            rb.velocity = rb.velocity.normalized * speedLimit;
+        }
+*/
+    }
 
     private void ComputeMotors()
     {
