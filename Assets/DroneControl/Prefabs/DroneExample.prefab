@@ -661,6 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32750b7aa5a5b134eb3fa1fe5646825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedLimit: 0
   Controller: {fileID: 114000011537161064}
   ThrottleIncrease: 10
   Motors:
