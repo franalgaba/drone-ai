@@ -77,6 +77,9 @@ GameObject:
   - 54: {fileID: 5440500}
   - 114: {fileID: 11411986}
   - 114: {fileID: 11405560}
+  - 114: {fileID: 114000012191211040}
+  - 114: {fileID: 114000010096883370}
+  - 114: {fileID: 114000012464459096}
   m_Layer: 0
   m_Name: DroneExample
   m_TagString: Untagged
@@ -835,6 +838,17 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012465637452}
   m_Enabled: 1
+--- !u!114 &114000010096883370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdfb5ddb7b389843997af9dd6f2ebc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000010378131826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -882,6 +896,28 @@ MonoBehaviour:
   InvertPitch: 0
   RollCommand: Roll
   InvertRoll: 1
+--- !u!114 &114000012191211040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e795af4df1acf34a84d797e70a1cf96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114000012464459096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8684a54226e474eac8027da1431730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012820831318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -905,7 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881421b81580f2949a591b4dabc29f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
+  range: 10
   objective: {fileID: 0}
 --- !u!124 &124000011277201404
 Behaviour:

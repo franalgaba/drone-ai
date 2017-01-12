@@ -10,15 +10,29 @@ public class Sensing : MonoBehaviour {
 	private float distance = 0.0f;
 	private float speed = 0.0f;
 
-	//sensores
+	//sensor delante
 	private RaycastHit delante;
-	private RaycastHit arriba;
+
+	//sensores de la izquierda
+	private RaycastHit cercaIzquierda;
+	private Transform offsetCI;
 	private RaycastHit izquierda;
+	private Transform offsetI;
+	private RaycastHit muyIzquierda;
+
+	//sensores de la serecha
+	private RaycastHit cercaDerecha;
+	private Transform offsetCD;
 	private RaycastHit derecha;
-	private RaycastHit atras;
-	private RaycastHit debajo;
+	private Transform offsetD;
+	private RaycastHit muyDerecha;
+
 	//para coger la velocidad a la que va el drone
 	private Rigidbody drone;
+
+	//angulo del obstaculo respecto de la orientacion del drone
+	private float anguloObst;
+	private float minimaDist = 99.9f;
 
 
 	void FixedUpdate () {		
@@ -27,8 +41,6 @@ public class Sensing : MonoBehaviour {
 		speed = drone.velocity.magnitude;
 		print("velocidad en m/s: " + speed);
 		//Enviar velocidad a controlador AI
-
-		//Enviar aceleracion a controlador AI?
 
 		//solo vemos la distancia respectos de los ejes xz, no nos importa la distancia respecto a la altura
 		distance = Vector3.Distance(new Vector3(this.transform.position.x, 0.0f, this.transform.position.z), 
@@ -39,38 +51,107 @@ public class Sensing : MonoBehaviour {
 		//para pintar las rayitas del sensor
 		Debug.DrawRay (transform.position, transform.forward * range);
 
-		if (Physics.Raycast(transform.position, transform.forward, out delante, range))
-			print("objeto delante a distancia: " + delante.distance);
-			//enviar distancia al controlador AI
+		//Delante 0 grados
 
-		Debug.DrawRay (transform.position, transform.up * range);
+		if (Physics.Raycast (transform.position, transform.forward, out delante, range)) 
+		{
+			minimaDist = delante.distance;
+			//si el obstaculo esta delante el angulo es 0
+			anguloObst = 0.0f;
+		}
 
-		if (Physics.Raycast(transform.position, transform.up, out arriba, range))
-			print("objeto arriba a distancia: " + arriba.distance);
-			//enviar distancia al controlador AI
-		
+		//Muy izquierda -90 grados
+
 		Debug.DrawRay (transform.position, -transform.right * range);
 
-		if (Physics.Raycast(transform.position, -transform.right, out izquierda, range))
-			print("obejto a la izquierda a distancia: " + izquierda.distance);
-			//enviar distancia al controlador AI
-		
+		if (Physics.Raycast (transform.position, -transform.right, out muyIzquierda, range)) 
+		{
+			if (muyIzquierda.distance < minimaDist) 
+			{
+				minimaDist = muyIzquierda.distance;
+				anguloObst = -90.0f;
+			}
+		}
+
+		//Cerca Izquierda -30 grados
+
+		offsetCI = transform;
+		offsetCI.rotation = Quaternion.Euler(0,-30,0);
+
+		Debug.DrawRay (transform.position, offsetCI.forward  * range);
+
+		if (Physics.Raycast (transform.position, offsetCI.forward, out cercaIzquierda, range)) 
+		{
+			if (cercaIzquierda.distance < minimaDist) 
+			{
+				minimaDist = cercaIzquierda.distance;
+				anguloObst = -30.0f;
+			}
+		}
+
+		//Izquierda -60 grados
+
+		offsetI = transform;
+		offsetI.rotation = Quaternion.Euler(0.0f, -60.0f, 0.0f);
+
+		Debug.DrawRay (transform.position, offsetI.forward  * range);
+
+		if (Physics.Raycast (transform.position, offsetI.forward, out izquierda, range)) 
+		{
+			if (izquierda.distance < minimaDist) 
+			{
+				minimaDist = izquierda.distance;
+				anguloObst = -60.0f;
+			}
+		}
+			
+		//MuyDerecha 90 grados
+
 		Debug.DrawRay (transform.position, transform.right * range);
 
-		if (Physics.Raycast(transform.position, transform.right, out derecha, range))
-			print("objeto a la derecha a distancia: " + derecha.distance);
-			//enviar distancia al controlador AI
+		if (Physics.Raycast (transform.position, transform.right, out muyDerecha, range)) 
+		{
+			if (muyDerecha.distance < minimaDist) 
+			{
+				minimaDist = muyDerecha.distance;
+				anguloObst = 90.0f;
+			}
+		}
 
-		Debug.DrawRay (transform.position, -transform.forward * range);
+		//CercaDerecha 30 grados
 
-		if (Physics.Raycast(transform.position, -transform.forward, out atras, range))
-			print("objeto atras a distancia: " + atras.distance);
-			//enviar distancia al controlador AI
+		offsetCD = transform;
+		offsetCD.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
 
-		Debug.DrawRay (transform.position, -transform.up * range);
+		Debug.DrawRay (transform.position, offsetCD.forward  * range);
 
-		if (Physics.Raycast(transform.position, -transform.up, out debajo, range))
-			print("objeto debajo a distancia: " + debajo.distance);
-			//enviar distancia al controlador AI
+		if (Physics.Raycast (transform.position, offsetCD.forward, out cercaDerecha, range)) 
+		{
+			if (cercaDerecha.distance < minimaDist) 
+			{
+				minimaDist = cercaDerecha.distance;
+				anguloObst = 30.0f;
+			}
+		}
+
+		//Derecha 60 grados
+
+		offsetD = transform;
+		offsetD.rotation = Quaternion.Euler(0.0f, 60.0f, 0.0f);
+
+		Debug.DrawRay (transform.position, offsetD.forward * range);
+
+		if (Physics.Raycast (transform.position, offsetD.forward, out derecha, range)) 
+		{
+			if (derecha.distance < minimaDist) 
+			{
+				minimaDist = derecha.distance;
+				anguloObst = 60.0f;
+			}
+		}
+
+		print("distacia minima de obstaculo: " + minimaDist + " con a un angulo de: " + anguloObst);
+		//Enviar distancia minima y el angulo del obstaculo
+
 	}
 }

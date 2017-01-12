@@ -1,12 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Complete
-{
     [Serializable]
     public class TankManager
     {
-
+		/*
 		//Clase para gestionar los parámetros de cada dron, decirles cuando empezar, cuando parar etc.
 
         // This class is to manage various settings on a tank.
@@ -83,4 +81,5 @@ namespace Complete
             m_Instance.SetActive (true);
         }
     }
+	*/
 }

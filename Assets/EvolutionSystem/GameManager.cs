@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Complete
-{
     public class GameManager : MonoBehaviour
     {
+	/*
+
         // public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
 
 		//este retardo sustituirlo por Ok de Java para que empiece nueva generacion
@@ -271,4 +271,5 @@ namespace Complete
             }
         }
     }
+*/
 }
