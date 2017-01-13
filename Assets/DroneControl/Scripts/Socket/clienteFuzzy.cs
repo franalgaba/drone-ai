@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System;
 
-public class Udp : MonoBehaviour {
+public class clienteFuzzy : MonoBehaviour {
 
 	private UdpClient udpClient;
 	private IPEndPoint RemoteIpEndPoint;
@@ -17,17 +17,12 @@ public class Udp : MonoBehaviour {
 	private byte[] bufSendAngDest;
 	private byte[] bufReceiveAng;
 
-	float anguloMotor;
+	private float anguloMotor ;
 
-	public int clientPort;
-	public int serverPort;
+	public int clientPort; //11000
+	public int serverPort; //9900
 
 	private String mRecibir;
-
-	//borrar
-	private float distanciaObj = 1234.123f;
-	private float anguloObj = -2233.2124f;
-	private float anguloDest = -0.9f;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +32,7 @@ public class Udp : MonoBehaviour {
 		RemoteIpEndPoint = new IPEndPoint(IPAddress.Loopback, serverPort);
 
 		try{
-			Debug.Log("Cliente Drone X conectado con el Servidor");
+			Debug.Log("Cliente Drone conectado con el Servidor");
 			udpClient.Connect("localhost", serverPort);
 			Debug.Log("Conectado");
 
@@ -48,8 +43,8 @@ public class Udp : MonoBehaviour {
 	
 	}
 
-	//	public float Evaluar (float distanciaObj, float anguloObj, float anguloDest) {
-	void FixedUpdate () {
+	//OJO SIEMPRE QUE SE LLAME A ESTA FUNCION SE TIENEN QUE PONER LOS ARGUMENTOS CON ALGUN VALOR DECIMAL EJEMPLO XXX.1
+	public float Evaluar (float distanciaObj, float anguloObj, float anguloDest) {
 		try{
 
 			bufSendDistObj = Encoding.ASCII.GetBytes(distanciaObj.ToString());
@@ -57,41 +52,21 @@ public class Udp : MonoBehaviour {
 			bufSendAngDest = Encoding.ASCII.GetBytes(anguloDest.ToString());
 
 			// Sends a message to the host to which you have connected.
-			Debug.Log("Enviando distanciaObj: " + Encoding.ASCII.GetString(bufSendDistObj));
 			udpClient.Send(bufSendDistObj, bufSendDistObj.Length);
-			Debug.Log("Enviando anguloObj: " + Encoding.ASCII.GetString(bufSendAngObj));
 			udpClient.Send(bufSendAngObj, bufSendAngObj.Length);
-			Debug.Log("Enviando anguloDestino: " + Encoding.ASCII.GetString(bufSendAngDest));
 			udpClient.Send(bufSendAngDest, bufSendAngDest.Length);
 
 			// Blocks until a message returns on this socket from a remote host.
-			Debug.Log("Esperando a recibir."  + "   -hora: " + DateTime.Now.TimeOfDay);
-
 			bufReceiveAng = udpClient.Receive(ref RemoteIpEndPoint); 
-
 			mRecibir =Encoding.ASCII.GetString(bufReceiveAng);
 			anguloMotor = float.Parse(mRecibir);
-			Debug.Log("Received data string: " + mRecibir);
-			Debug.Log("Received data float: " + anguloMotor);
-			 
-			distanciaObj += 0.1f;
-			anguloObj += 0.1f;
-			anguloDest = anguloDest + 0.1f;
-
 
 		}catch (Exception e ) {
 			Debug.Log(e.ToString());
+			anguloMotor = 0.0f;
 		}
+
+		return anguloMotor;
 	}
 
 }
-	
-//mEnviar = "Mensaje" ;
-//sendBytes = Encoding.ASCII.GetBytes(mEnviar);
-//otra forma de enviar sin establecer conexión
-//udpClientB.Send(sendBytes, sendBytes.Length, "AlternateHostMachineName", 11000);
-
-//Debug.Log("This message was sent from " + RemoteIpEndPoint.Address.ToString() +
-//	" on their port number " + RemoteIpEndPoint.Port.ToString());
-
-//udpClient.Close();
