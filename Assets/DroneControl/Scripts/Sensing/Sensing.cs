@@ -35,6 +35,7 @@ public class Sensing : MonoBehaviour {
     private Transform obstaculo;
 
 	private int layerMask = 1 << 8;
+	private Vector3 crossVector;
 
 
     void Start()
@@ -69,8 +70,12 @@ public class Sensing : MonoBehaviour {
 		if (closestObs != null) 
 		{
 			obstaculo = closestObs.transform;
-			//no me preguntes porque hay que negar el forward, el caso es que funciona a la perfeccion
+			//girar hacia la derecha -> angulo negativo / girar hacia la izquierda -> angulo positivo
+			//misma polaridad que en el paper creo yo
 			anguloObj = Vector3.Angle(-transform.forward, obstaculo.position);
+			crossVector = Vector3.Cross (-transform.forward, obstaculo.position);
+			if (crossVector.y < 0)
+				anguloObj = -anguloObj;
 		}
 		else Debug.Log("obstaculo es null");
 			
@@ -80,6 +85,11 @@ public class Sensing : MonoBehaviour {
 										 new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z));
 
         anguloDest = Vector3.Angle(transform.forward, objective.position);
+		crossVector = Vector3.Cross (transform.forward, objective.position);
+		//girar hacia la derecha -> angulo positivo / girar hacia la izquierda -> angulo negativo
+		//misma polaridad que en el paper creo yo
+		if (crossVector.y < 0)
+			anguloDest = -anguloDest;
 
 
 		//Todo funciona como debe
