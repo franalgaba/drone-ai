@@ -77,6 +77,11 @@ GameObject:
   - 54: {fileID: 5440500}
   - 114: {fileID: 11411986}
   - 114: {fileID: 11405560}
+  - 114: {fileID: 114000012191211040}
+  - 114: {fileID: 114000010096883370}
+  - 114: {fileID: 114000012464459096}
+  - 65: {fileID: 65000010558649202}
+  - 114: {fileID: 114000013399219904}
   m_Layer: 0
   m_Name: DroneExample
   m_TagString: Untagged
@@ -179,7 +184,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 1.69, z: -71.55}
+  m_LocalPosition: {x: 0, y: -0.03000021, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -658,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32750b7aa5a5b134eb3fa1fe5646825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedLimit: 0
   Controller: {fileID: 114000011537161064}
   ThrottleIncrease: 10
   Motors:
@@ -667,6 +673,8 @@ MonoBehaviour:
   - {fileID: 11450984}
   ThrottleValue: 0
   Computer: {fileID: 11405560}
+  anguloGiro: 0
+  turningRate: 30
 --- !u!114 &11450984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -821,13 +829,25 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!65 &65000010558649202
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.7, z: 1.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!81 &81000012534382986
 AudioListener:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012465637452}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &92000012034374066
 Behaviour:
   m_ObjectHideFlags: 1
@@ -835,6 +855,17 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012465637452}
   m_Enabled: 1
+--- !u!114 &114000010096883370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdfb5ddb7b389843997af9dd6f2ebc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000010378131826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -882,6 +913,28 @@ MonoBehaviour:
   InvertPitch: 0
   RollCommand: Roll
   InvertRoll: 1
+--- !u!114 &114000012191211040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e795af4df1acf34a84d797e70a1cf96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114000012464459096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8684a54226e474eac8027da1431730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012820831318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -894,6 +947,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 170300}
+--- !u!114 &114000013399219904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48622c247ced2d8489cae37288e89bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datos: {fileID: 1000013507508828}
 --- !u!114 &114000014241205768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -905,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881421b81580f2949a591b4dabc29f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
+  range: 10
   objective: {fileID: 0}
 --- !u!124 &124000011277201404
 Behaviour:

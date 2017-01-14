@@ -7,70 +7,132 @@ public class Sensing : MonoBehaviour {
 	public float range;
 	public Transform objective;
 
-	private float distance = 0.0f;
-	private float speed = 0.0f;
-
-	//sensores
-	private RaycastHit delante;
-	private RaycastHit arriba;
-	private RaycastHit izquierda;
-	private RaycastHit derecha;
-	private RaycastHit atras;
-	private RaycastHit debajo;
 	//para coger la velocidad a la que va el drone
 	private Rigidbody drone;
 
+    private Collider[] obstaculos;
+    private Vector3 closestPoint;
+    private float distObs = 99.9f;
 
-	void FixedUpdate () {		
+    private float speed = 0.0f;
+    //variables a enviar
+    //distancia al objetivo
+    private float distanciaDest = 0.0f;
+    //distancia del obstaculo
+    private float minDistObj = 99.9f;
+    //angulo del obstaculo
+    private float anguloObj;
+    //maxima distancia al objetivo
+    private float maxDistaciaDest;
+    //angulo del objetivo
+    private float anguloDest;
+	//tiempo en ejecucion
+	private float tiempo;
+
+    private Collider closestObs;
+    private Transform obstaculo;
+
+	private int layerMask = 1 << 8;
+	private Vector3 crossVector;
+
+    void Start()
+    {
+        maxDistaciaDest = Vector3.Distance(new Vector3(this.transform.position.x, 0.0f, this.transform.position.z),
+                                    new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z));
+    }
+
+
+	void FixedUpdate () {	
+		tiempo = Time.realtimeSinceStartup;
 
 		drone = this.GetComponentInParent<Rigidbody> ();
 		speed = drone.velocity.magnitude;
-		print("velocidad en m/s: " + speed);
-		//Enviar velocidad a controlador AI
 
-		//Enviar aceleracion a controlador AI?
+		obstaculos = Physics.OverlapSphere(transform.position, range, layerMask);
 
-		//solo vemos la distancia respectos de los ejes xz, no nos importa la distancia respecto a la altura
-		distance = Vector3.Distance(new Vector3(this.transform.position.x, 0.0f, this.transform.position.z), 
-									new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z));
-		print("objetivo a distancia: " + distance);
-		//enviar distancia al controlador AI
+		//Debug.Log ("numero de obstaculos: " + obstaculos.Length);
 
-		//para pintar las rayitas del sensor
-		Debug.DrawRay (transform.position, transform.forward * range);
+        int i = 0;
+        while( i < obstaculos.Length)
+        {
+			closestPoint = obstaculos[i].ClosestPointOnBounds(transform.position);
+			distObs = Vector3.Distance(closestPoint, transform.position);
+			if (distObs < minDistObj)
+			{
+				closestObs = obstaculos[i];
+				minDistObj = distObs;
+			}
+			i++;
+        }
 
-		if (Physics.Raycast(transform.position, transform.forward, out delante, range))
-			print("objeto delante a distancia: " + delante.distance);
-			//enviar distancia al controlador AI
+		if (closestObs != null) 
+		{
+			obstaculo = closestObs.transform;
+			//girar hacia la derecha -> angulo negativo / girar hacia la izquierda -> angulo positivo
+			//misma polaridad que en el paper creo yo
+			anguloObj = Vector3.Angle(-transform.forward, obstaculo.position);
+			crossVector = Vector3.Cross (-transform.forward, obstaculo.position);
+			if (crossVector.y < 0)
+				anguloObj = -anguloObj;
+		}
+		else Debug.Log("obstaculo es null");
+			
 
-		Debug.DrawRay (transform.position, transform.up * range);
+        //solo vemos la distancia respectos de los ejes xz, no nos importa la distancia respecto a la altura
+        distanciaDest = Vector3.Distance(new Vector3(this.transform.position.x, 0.0f, this.transform.position.z), 
+										 new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z));
 
-		if (Physics.Raycast(transform.position, transform.up, out arriba, range))
-			print("objeto arriba a distancia: " + arriba.distance);
-			//enviar distancia al controlador AI
-		
-		Debug.DrawRay (transform.position, -transform.right * range);
+        anguloDest = Vector3.Angle(transform.forward, objective.position);
+		crossVector = Vector3.Cross (transform.forward, objective.position);
+		//girar hacia la derecha -> angulo positivo / girar hacia la izquierda -> angulo negativo
+		//misma polaridad que en el paper creo yo
+		if (crossVector.y < 0)
+			anguloDest = -anguloDest;
 
-		if (Physics.Raycast(transform.position, -transform.right, out izquierda, range))
-			print("obejto a la izquierda a distancia: " + izquierda.distance);
-			//enviar distancia al controlador AI
-		
-		Debug.DrawRay (transform.position, transform.right * range);
 
-		if (Physics.Raycast(transform.position, transform.right, out derecha, range))
-			print("objeto a la derecha a distancia: " + derecha.distance);
-			//enviar distancia al controlador AI
+		//Todo funciona como debe
+		//Debug.Log("maxima distancia del objetivo: " + maxDistaciaDest);
+		//La velocidad maxima es 1.35 m/s, comprobado empiricamente, es lo maximo que puede llegar en linea recta hasta el final
+		//Debug.Log("velocidad en m/s: " + speed);
+		//Debug.Log("distacia al objetivo: " + distanciaDest + " a un angulo de: " + anguloDest);
+		//Debug.Log("distacia minima de obstaculo: " + minDistObj + " con a un angulo de: " + anguloObj);
 
-		Debug.DrawRay (transform.position, -transform.forward * range);
+		minDistObj = 99.9f;
 
-		if (Physics.Raycast(transform.position, -transform.forward, out atras, range))
-			print("objeto atras a distancia: " + atras.distance);
-			//enviar distancia al controlador AI
-
-		Debug.DrawRay (transform.position, -transform.up * range);
-
-		if (Physics.Raycast(transform.position, -transform.up, out debajo, range))
-			print("objeto debajo a distancia: " + debajo.distance);
-			//enviar distancia al controlador AI
 	}
+
+	public float getSpeed()
+	{
+		return speed;
+	}
+
+	public float getDistanciaDest()
+	{
+		return distanciaDest;
+	}
+
+	public float getMinDistObj()
+	{
+		return minDistObj;
+	}
+
+	public float getAnguloObj()
+	{
+		return anguloObj;
+	}
+
+	public float getMaxDistanciaDest()
+	{
+		return maxDistaciaDest;
+	}
+
+	public float getAnguloDest()
+	{
+		return anguloDest;
+	}
+	public float getTiempo()
+	{
+		return tiempo;
+	}
+
 }
