@@ -4,7 +4,11 @@ using UnityEngine.Networking;
 
 public class BasicControl : MonoBehaviour {
 
-	[Header("Control")]
+
+    [Header("Limites")]
+    public float speedLimit;
+
+    [Header("Control")]
 	public Controller Controller;
 	public float ThrottleIncrease;
 	
@@ -15,14 +19,30 @@ public class BasicControl : MonoBehaviour {
     [Header("Internal")]
     public ComputerModule Computer;
 
+	//RECIBE EL ANGULO DE JFUZZY
+	public float anguloGiro;
+
+	public float turningRate = 30f; 
+	// Rotation we should blend towards.
+	private Quaternion _targetRotation;
+	// Call this when you want to turn the object smoothly.
+	public void SetBlendedEulerAngles(Vector3 angles)
+	{
+		_targetRotation = Quaternion.Euler(angles);
+	}
+
+
 	void FixedUpdate() {
+		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
+
         Computer.UpdateComputer(Controller.Pitch, Controller.Roll, Controller.Throttle * ThrottleIncrease);
         ThrottleValue = Computer.HeightCorrection;
         ComputeMotors();
         if (Computer != null)
             Computer.UpdateGyro();
         ComputeMotorSpeeds();
-	}
+    }
 
     private void ComputeMotors()
     {

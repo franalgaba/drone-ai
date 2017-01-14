@@ -32,15 +32,45 @@ public class Udp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		 
+
 		udpClient = new UdpClient(clientPort);
+
+		Contador = 0;
+		//el 11000 es el puerto del cliente
+		udpClient = new UdpClient(11000);
+
 		//esto para la hora de recibir
 		RemoteIpEndPoint = new IPEndPoint(IPAddress.Loopback, serverPort);
 
 		try{
+
 			Debug.Log("Cliente Drone X conectado con el Servidor");
 			udpClient.Connect("localhost", serverPort);
 			Debug.Log("Conectado");
 
+			Debug.Log("Cliente Drone conectado con el Servido");
+			udpClient.Connect("localhost", 9900);
+
+			mEnviar = "Mensaje" + Contador;
+			sendBytes = Encoding.ASCII.GetBytes(mEnviar);
+
+			// Sends a message to the host to which you have connected.
+			Debug.Log("Conectado y Enviando String: " + mEnviar);
+			udpClient.Send(sendBytes, sendBytes.Length);
+
+			//otra forma de enviar sin establecer conexión
+			//udpClientB.Send(sendBytes, sendBytes.Length, "AlternateHostMachineName", 11000);
+
+			// Blocks until a message returns on this socket from a remote host.
+			Debug.Log("Enviado y Esperando a recibir " + Contador + "   -hora: " + DateTime.Now.TimeOfDay);
+			receiveBytes = udpClient.Receive(ref RemoteIpEndPoint); 
+			mRecibir = Encoding.ASCII.GetString(receiveBytes);
+			Debug.Log("Received data: " + mRecibir);
+
+			Debug.Log("This message was sent from " + RemoteIpEndPoint.Address.ToString() +
+				" on their port number " + RemoteIpEndPoint.Port.ToString());
+
+			//udpClient.Close();
 		}  
 		catch (Exception e ) {
 			Debug.Log(e.ToString());
