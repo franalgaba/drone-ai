@@ -32,8 +32,8 @@ public class Controller : MonoBehaviour {
 
 	void Update() {
         Throttle = Input.GetAxisRaw(ThrottleCommand) * (InvertThrottle ? -1 : 1);
-		Yaw = 0 * (InvertYaw ? -1 : 1);
-        Pitch = 1 * (InvertPitch ? -1 : 1);
+		Yaw = /*Input.GetAxisRaw(YawCommand)*/0 * (InvertYaw ? -1 : 1);
+		Pitch = /*Input.GetAxisRaw(PitchCommand)*/1 * (InvertPitch ? -1 : 1);
         Roll = Input.GetAxisRaw(RollCommand) * (InvertRoll ? -1 : 1);
 	}
 

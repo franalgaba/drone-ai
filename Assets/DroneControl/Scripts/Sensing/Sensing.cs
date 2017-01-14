@@ -10,10 +10,6 @@ public class Sensing : MonoBehaviour {
 	//para coger la velocidad a la que va el drone
 	private Rigidbody drone;
 
-	//angulo del obstaculo respecto de la orientacion del drone
-	private float anguloObst;
-	private float minimaDist = 99.9f;
-
     private Collider[] obstaculos;
     private Vector3 closestPoint;
     private float distObs = 99.9f;
@@ -95,11 +91,11 @@ public class Sensing : MonoBehaviour {
 
 
 		//Todo funciona como debe
-		Debug.Log("maxima distancia del objetivo: " + maxDistaciaDest);
+		//Debug.Log("maxima distancia del objetivo: " + maxDistaciaDest);
 		//La velocidad maxima es 1.35 m/s, comprobado empiricamente, es lo maximo que puede llegar en linea recta hasta el final
-		Debug.Log("velocidad en m/s: " + speed);
-		Debug.Log("distacia al objetivo: " + distanciaDest + " a un angulo de: " + anguloDest);
-		Debug.Log("distacia minima de obstaculo: " + minDistObj + " con a un angulo de: " + anguloObj);
+		//Debug.Log("velocidad en m/s: " + speed);
+		//Debug.Log("distacia al objetivo: " + distanciaDest + " a un angulo de: " + anguloDest);
+		//Debug.Log("distacia minima de obstaculo: " + minDistObj + " con a un angulo de: " + anguloObj);
 
 		minDistObj = 99.9f;
 

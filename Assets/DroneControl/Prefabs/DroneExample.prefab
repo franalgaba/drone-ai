@@ -184,7 +184,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 1.69, z: -71.55}
+  m_LocalPosition: {x: 0, y: -0.03000021, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -847,7 +847,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012465637452}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &92000012034374066
 Behaviour:
   m_ObjectHideFlags: 1
@@ -958,6 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48622c247ced2d8489cae37288e89bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  datos: {fileID: 1000013507508828}
 --- !u!114 &114000014241205768
 MonoBehaviour:
   m_ObjectHideFlags: 1
