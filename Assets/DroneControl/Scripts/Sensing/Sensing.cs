@@ -30,13 +30,14 @@ public class Sensing : MonoBehaviour {
     private float maxDistaciaDest;
     //angulo del objetivo
     private float anguloDest;
+	//tiempo en ejecucion
+	private float tiempo;
 
     private Collider closestObs;
     private Transform obstaculo;
 
 	private int layerMask = 1 << 8;
 	private Vector3 crossVector;
-
 
     void Start()
     {
@@ -45,7 +46,8 @@ public class Sensing : MonoBehaviour {
     }
 
 
-	void FixedUpdate () {		
+	void FixedUpdate () {	
+		tiempo = Time.realtimeSinceStartup;
 
 		drone = this.GetComponentInParent<Rigidbody> ();
 		speed = drone.velocity.magnitude;
@@ -100,5 +102,41 @@ public class Sensing : MonoBehaviour {
 		Debug.Log("distacia minima de obstaculo: " + minDistObj + " con a un angulo de: " + anguloObj);
 
 		minDistObj = 99.9f;
+
 	}
+
+	public float getSpeed()
+	{
+		return speed;
+	}
+
+	public float getDistanciaDest()
+	{
+		return distanciaDest;
+	}
+
+	public float getMinDistObj()
+	{
+		return minDistObj;
+	}
+
+	public float getAnguloObj()
+	{
+		return anguloObj;
+	}
+
+	public float getMaxDistanciaDest()
+	{
+		return maxDistaciaDest;
+	}
+
+	public float getAnguloDest()
+	{
+		return anguloDest;
+	}
+	public float getTiempo()
+	{
+		return tiempo;
+	}
+
 }

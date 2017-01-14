@@ -80,6 +80,8 @@ GameObject:
   - 114: {fileID: 114000012191211040}
   - 114: {fileID: 114000010096883370}
   - 114: {fileID: 114000012464459096}
+  - 65: {fileID: 65000010558649202}
+  - 114: {fileID: 114000013399219904}
   m_Layer: 0
   m_Name: DroneExample
   m_TagString: Untagged
@@ -671,6 +673,8 @@ MonoBehaviour:
   - {fileID: 11450984}
   ThrottleValue: 0
   Computer: {fileID: 11405560}
+  anguloGiro: 0
+  turningRate: 30
 --- !u!114 &11450984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -825,6 +829,18 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!65 &65000010558649202
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.7, z: 1.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!81 &81000012534382986
 AudioListener:
   m_ObjectHideFlags: 1
@@ -931,6 +947,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 170300}
+--- !u!114 &114000013399219904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48622c247ced2d8489cae37288e89bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000014241205768
 MonoBehaviour:
   m_ObjectHideFlags: 1
