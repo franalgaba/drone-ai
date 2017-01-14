@@ -15,10 +15,10 @@ public class servidorFuzzy {
 		byte[] buf ;
 		String recibido1;
 
-		float distObj;
-		float angObj;
-		float angDest;
-		float angDrone = 1.1f;		
+		float distObj;          //distancia objeto-obstaculo cercano
+		float angObj;           //angulo objeto-obstaculo cercano
+		float angDest;          //angulo destino 
+		float angDrone = 1.1f;	//cuanto tiene que girar el drone - comanda al motor	
 		
 		DatagramPacket packetDistObj;
 		DatagramPacket packetAngObj; 
@@ -30,11 +30,15 @@ public class servidorFuzzy {
 		InetAddress clientAddress;
 		int clientPort;
 		
+		obstacleAvoidance OA;
+		
 		try {
-			// Create a udp socket for sending and receiving datagrams in serverPort
-			udpSocket = new DatagramSocket(serverPort);
+			OA = new obstacleAvoidance();
 			
+			// Create a udp socket for sending and receiving datagrams in serverPort
+			udpSocket = new DatagramSocket(serverPort);			
 			System.out.println("Server: waiting for new datagrams...");
+			
 			buf = new byte[300];
 			packetDistObj = new DatagramPacket(buf, buf.length);
 			packetAngObj = new DatagramPacket(buf, buf.length);
@@ -60,16 +64,18 @@ public class servidorFuzzy {
 				clientAddress = packetDistObj.getAddress();
 				clientPort = packetDistObj.getPort();	
 				
-				// Salgo del While si el mensaje que envio al servidor es null o stop.
+				// Salgo del While si el mensaje recibido es  -1000.9
 				//SI SE HACEN GENERACIONES HACER UN WAIT PARA CUANDO SE PARE LA GENERACION
 				if (distObj == menosMil ) { 
 					System.out.println("Las comunicaciones han finalizado");
 					break;}
 				
 				//Si no entra se envia el valor de la vez anterior
-				if (angDest == -6789f || angObj == -6789f || distObj == -6789f ){
-						angDrone = 00f; //angDrone = evaluar ( angDest, angObj, distObj);
+				if (angDest != -6789f || angObj == -6789f || distObj == -6789f ){
+						angDrone = OA.evaluar( angDest, angObj, distObj);
 					} 
+				
+				angDrone=comprobarFloat(angDrone);
 						
 				buf = (Float.toString(angDrone)).getBytes();
 				
@@ -92,8 +98,23 @@ public class servidorFuzzy {
 		}
 	}
 	
+	private static float comprobarFloat(final float angDrone) {
+		float out =0.1f;
+		String convertido = String.valueOf(angDrone);
+		
+		convertido= convertido.replace(".0",".1");	
+		
+		out= stringToFloat(convertido);
+		
+		if ((out %1)==0){
+			out = out + 0.1f;
+		}
+		
+		return out;
+	}
+
 	private static float stringToFloat (final String convertir){
-		float out = 0.0f;
+		float out = 0.1f;
 		String convertido;
 		int posicionDecimal;
 		
@@ -103,13 +124,10 @@ public class servidorFuzzy {
 		try{
 			out = Float.parseFloat(convertido);
 		} catch (NumberFormatException e){
-			return out=-6789f;
+			return out=6789f;
 		}
 		
-		return out;
-		
+		return out;		
 	}
 	
 }
-
-//función para que cuando se envia angDrone tenga un .1
