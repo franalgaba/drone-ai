@@ -12,23 +12,42 @@ public class Udp : MonoBehaviour {
 	private UdpClient udpClient;
 	private IPEndPoint RemoteIpEndPoint;
 
-	private Byte[] sendBytes;
-	private Byte[] receiveBytes;
+	private byte[] bufSendDistObj;
+	private byte[] bufSendAngObj;
+	private byte[] bufSendAngDest;
+	private byte[] bufReceiveAng;
 
-	private int Contador;
-	private String mEnviar;
+	float anguloMotor;
+
+	public int clientPort;
+	public int serverPort;
+
 	private String mRecibir;
+
+	//borrar
+	private float distanciaObj = 1234.123f;
+	private float anguloObj = -2233.2124f;
+	private float anguloDest = -0.9f;
 
 	// Use this for initialization
 	void Start () {
 		 
+
+		udpClient = new UdpClient(clientPort);
+
 		Contador = 0;
 		//el 11000 es el puerto del cliente
 		udpClient = new UdpClient(11000);
+
 		//esto para la hora de recibir
-		RemoteIpEndPoint = new IPEndPoint(IPAddress.Loopback, 9900);
+		RemoteIpEndPoint = new IPEndPoint(IPAddress.Loopback, serverPort);
 
 		try{
+
+			Debug.Log("Cliente Drone X conectado con el Servidor");
+			udpClient.Connect("localhost", serverPort);
+			Debug.Log("Conectado");
+
 			Debug.Log("Cliente Drone conectado con el Servido");
 			udpClient.Connect("localhost", 9900);
 
@@ -52,42 +71,57 @@ public class Udp : MonoBehaviour {
 				" on their port number " + RemoteIpEndPoint.Port.ToString());
 
 			//udpClient.Close();
-
 		}  
 		catch (Exception e ) {
 			Debug.Log(e.ToString());
 		}
 	
 	}
-	
-	// Update is called once per frame
+
+	//	public float Evaluar (float distanciaObj, float anguloObj, float anguloDest) {
 	void FixedUpdate () {
+		try{
 
-		Contador++;
-		mEnviar = "Mensaje" + Contador;
-		sendBytes = Encoding.ASCII.GetBytes(mEnviar);
+			bufSendDistObj = Encoding.ASCII.GetBytes(distanciaObj.ToString());
+			bufSendAngObj  = Encoding.ASCII.GetBytes(anguloObj.ToString());
+			bufSendAngDest = Encoding.ASCII.GetBytes(anguloDest.ToString());
 
-		// Sends a message to the host to which you have connected.
-		Debug.Log("Enviando String: " + mEnviar);
-		udpClient.Send(sendBytes, sendBytes.Length);
-		Debug.Log("ENVIADO");
+			// Sends a message to the host to which you have connected.
+			Debug.Log("Enviando distanciaObj: " + Encoding.ASCII.GetString(bufSendDistObj));
+			udpClient.Send(bufSendDistObj, bufSendDistObj.Length);
+			Debug.Log("Enviando anguloObj: " + Encoding.ASCII.GetString(bufSendAngObj));
+			udpClient.Send(bufSendAngObj, bufSendAngObj.Length);
+			Debug.Log("Enviando anguloDestino: " + Encoding.ASCII.GetString(bufSendAngDest));
+			udpClient.Send(bufSendAngDest, bufSendAngDest.Length);
+
+			// Blocks until a message returns on this socket from a remote host.
+			Debug.Log("Esperando a recibir."  + "   -hora: " + DateTime.Now.TimeOfDay);
+
+			bufReceiveAng = udpClient.Receive(ref RemoteIpEndPoint); 
+
+			mRecibir =Encoding.ASCII.GetString(bufReceiveAng);
+			anguloMotor = float.Parse(mRecibir);
+			Debug.Log("Received data string: " + mRecibir);
+			Debug.Log("Received data float: " + anguloMotor);
+			 
+			distanciaObj += 0.1f;
+			anguloObj += 0.1f;
+			anguloDest = anguloDest + 0.1f;
 
 
-		// Blocks until a message returns on this socket from a remote host.
-		Debug.Log("Esperando a recibir " + Contador + "   -hora: " + DateTime.Now.TimeOfDay);
-		receiveBytes = udpClient.Receive(ref RemoteIpEndPoint); 
-		mRecibir = Encoding.ASCII.GetString(receiveBytes);
-		Debug.Log("Received data: " + mRecibir);
-	
+		}catch (Exception e ) {
+			Debug.Log(e.ToString());
+		}
 	}
 
-	//pendiente de implementar https://msdn.microsoft.com/es-es/library/system.net.sockets.udpclient(v=vs.110).aspx
-	//  mirar https://msdn.microsoft.com/es-es/library/system.net.sockets.udpreceiveresult(v=vs.110).aspx
-   //tengo sueño, ya no hago más hasta mañana
-
 }
+	
+//mEnviar = "Mensaje" ;
+//sendBytes = Encoding.ASCII.GetBytes(mEnviar);
+//otra forma de enviar sin establecer conexión
+//udpClientB.Send(sendBytes, sendBytes.Length, "AlternateHostMachineName", 11000);
 
+//Debug.Log("This message was sent from " + RemoteIpEndPoint.Address.ToString() +
+//	" on their port number " + RemoteIpEndPoint.Port.ToString());
 
-
-
-
+//udpClient.Close();
