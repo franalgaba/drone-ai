@@ -20,11 +20,12 @@ VAR_OUTPUT				// Output variable
 	droneAngle : REAL;      //Motor command
 END_VAR
 
-FUZZIFY obstacleDist		// Fuzzify input variable 'obstacleDist': {'very_close', 'close' , 'far', 'very_far'}
+FUZZIFY obstacleDist		// Fuzzify input variable 'obstacleDist': {'very_close', 'close' , 'far', 'very_far', 'no_obstacle'}
 	TERM very_close := (0, 1) (1, 1) (2.5,0); 
 	TERM close := (1.5, 0) (3,1) (4.5,0);
 	TERM far := (3.5, 0) (5, 1) (6.5,0);
-	TERM very_far := (5.5, 0) (7.5, 1) (10,1);
+	TERM very_far := (5.5, 0) (7.5, 1) (12,1) (12,0);
+	TERM no_obstacle := (16,0) (16.5,1) (17.5,1) (18,0);
 END_FUZZIFY
 
 FUZZIFY obstacleAng			// Fuzzify input variable 'obstacleAng': { 'far_left', 'left', 'close_left', 'forward', 'close_right', 'right', 'far_right'  }
@@ -300,6 +301,13 @@ RULEBLOCK No1
 	RULE  195 : IF obstacleDist IS  very_far  AND obstacleAng IS   far_right    AND targetAng IS right        THEN droneAngle IS right_small;
 	RULE  196 : IF obstacleDist IS  very_far  AND obstacleAng IS   far_right    AND targetAng IS far_right    THEN droneAngle IS right_small;
 	
+	RULE  197 : IF obstacleDist IS  no_obstacle  AND targetAng IS far_left     THEN droneAngle IS left_big;
+	RULE  198 : IF obstacleDist IS  no_obstacle  AND targetAng IS left         THEN droneAngle IS left_small;
+	RULE  199 : IF obstacleDist IS  no_obstacle  AND targetAng IS close_left   THEN droneAngle IS left_very_small;
+	RULE  200 : IF obstacleDist IS  no_obstacle  AND targetAng IS forward      THEN droneAngle IS null;
+	RULE  201 : IF obstacleDist IS  no_obstacle  AND targetAng IS close_right  THEN droneAngle IS right_very_small;
+	RULE  202 : IF obstacleDist IS  no_obstacle  AND targetAng IS right        THEN droneAngle IS right_small;
+	RULE  203 : IF obstacleDist IS  no_obstacle  AND targetAng IS far_right    THEN droneAngle IS right_big;	
 
 	
 END_RULEBLOCK

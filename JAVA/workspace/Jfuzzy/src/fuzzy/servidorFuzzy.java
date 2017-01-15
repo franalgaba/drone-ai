@@ -49,6 +49,7 @@ public class servidorFuzzy {
 				udpSocket.receive(packetDistObj);
 				recibido1=new String(packetDistObj.getData());
 				distObj = stringToFloat(recibido1);
+				distObj = convertir99(distObj);
 								
 				// Receive the angObj from client
 				udpSocket.receive(packetAngObj);
@@ -98,6 +99,15 @@ public class servidorFuzzy {
 		}
 	}
 	
+	private static float convertir99(float distObj) {
+		float out = distObj;
+		
+		if(distObj>10.0f)
+			out= 17.0f;
+		
+		return out;
+	}
+
 	private static float comprobarFloat(final float angDrone) {
 		float out =0.1f;
 		String convertido = String.valueOf(angDrone);

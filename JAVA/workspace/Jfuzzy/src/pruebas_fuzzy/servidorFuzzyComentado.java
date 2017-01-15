@@ -55,6 +55,7 @@ public class servidorFuzzyComentado {
 				recibido1=new String(packetDistObj.getData());
 				System.out.println("El packetDistObj recibido es string: " + recibido1);
 				distObj = stringToFloat(recibido1);
+				distObj = convertir99(distObj);
 				System.out.println("El packetDistObj recibido es float: " + distObj);
 				
 				// Receive the angObj from client
@@ -116,6 +117,15 @@ public class servidorFuzzyComentado {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static float convertir99(float distObj) {
+		float out = distObj;
+		
+		if(distObj>10.0f)
+			out= 17.0f;
+		
+		return out;
 	}
 	
 	private static float comprobarFloat(final float angDrone) {
