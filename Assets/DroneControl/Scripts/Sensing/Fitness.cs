@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Triggers : MonoBehaviour {
+public class Fitness : MonoBehaviour {
 
 	public GameObject datos;
 
@@ -23,7 +23,7 @@ public class Triggers : MonoBehaviour {
 		}
 		if (collision.collider.tag == "Objetivo") 
 		{
-			//calculo final del fitness
+			//this.gameObject.SetActive(false);
 			calculaFitness (1);
 			Debug.Log ("el fitness es de: " + puntuacion);
 			//enviar puntuacion

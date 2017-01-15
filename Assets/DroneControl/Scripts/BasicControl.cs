@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 
 public class BasicControl : MonoBehaviour {
 
+	public GameObject funcion;
 
     [Header("Limites")]
     public float speedLimit;
@@ -19,9 +20,10 @@ public class BasicControl : MonoBehaviour {
     [Header("Internal")]
     public ComputerModule Computer;
 
-	//RECIBE EL ANGULO DE JFUZZY
-	public float anguloGiro;
+	//angulo que debe girar el drone
+	private float anguloGiro;
 
+	//velocidad de rotacion
 	public float turningRate = 30f; 
 	// Rotation we should blend towards.
 	private Quaternion _targetRotation;
@@ -33,9 +35,14 @@ public class BasicControl : MonoBehaviour {
 
 
 	void FixedUpdate() {
+		anguloGiro = funcion.GetComponent<clienteFuzzy> ().Evaluar (funcion.GetComponent<Sensing> ().getMinDistObj(), 
+																	funcion.GetComponent<Sensing> ().getAnguloObj(), 
+																	funcion.GetComponent<Sensing> ().getAnguloDest());
+		Debug.Log ("++ Recibido  angDrone: " + anguloGiro);
+
 		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
-
+		
         Computer.UpdateComputer(Controller.Pitch, Controller.Roll, Controller.Throttle * ThrottleIncrease);
         ThrottleValue = Computer.HeightCorrection;
         ComputeMotors();
@@ -67,7 +74,7 @@ public class BasicControl : MonoBehaviour {
             if (Computer.Gyro.Altitude < 0.1)
                 motor.UpdatePropeller(0.0f);
             else
-                motor.UpdatePropeller(1200.0f);
+                motor.UpdatePropeller(1200.0f); 
         }
     }
 }
