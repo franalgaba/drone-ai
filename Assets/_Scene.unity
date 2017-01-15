@@ -133,9 +133,9 @@ GameObject:
   - 33: {fileID: 371041534}
   - 65: {fileID: 371041533}
   - 23: {fileID: 371041532}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Delante
-  m_TagString: Obstaculo
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
