@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Sensing : MonoBehaviour {
 
-
+	public GameObject funcion;
 
 	//distancia a la que detecta objetos
 	public float range;
@@ -36,6 +36,19 @@ public class Sensing : MonoBehaviour {
 
 	private int layerMask = 1 << 8;
 	private Vector3 crossVector;
+
+	//angulo que debe girar el drone
+	private float anguloGiro;
+
+	//velocidad de rotacion
+	public float turningRate = 30f; 
+	// Rotation we should blend towards.
+	private Quaternion _targetRotation;
+	// Call this when you want to turn the object smoothly.
+	public void SetBlendedEulerAngles(Vector3 angles)
+	{
+		_targetRotation = Quaternion.Euler(angles);
+	}
 
     void Start()
     {
@@ -104,6 +117,12 @@ public class Sensing : MonoBehaviour {
 		anguloObj = (convertirCeroFloat (anguloObj)) *  -1.0f;
 		anguloDest = (convertirCeroFloat (anguloDest));
 		Debug.Log("-- Enviado  distObstaculo: " + minDistObj + " angObstaculo: " + anguloObj + " anguloDest: " + anguloDest);
+
+		anguloGiro = funcion.GetComponent<clienteFuzzy> ().Evaluar (minDistObj, anguloObj, anguloDest);
+		Debug.Log ("++ Recibido  angDrone: " + anguloGiro);
+
+		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
 
 		minDistObj = 99.9f;
 	}

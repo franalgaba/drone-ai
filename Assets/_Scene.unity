@@ -3267,11 +3267,6 @@ Prefab:
       propertyPath: m_Name
       value: Drone
       objectReference: {fileID: 0}
-    - target: {fileID: 81000012534382986, guid: 6a69533bf9f38764a8bded1158ae15ed,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
   m_IsPrefabParent: 0

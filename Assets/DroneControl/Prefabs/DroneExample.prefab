@@ -662,7 +662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32750b7aa5a5b134eb3fa1fe5646825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  funcion: {fileID: 170300}
   speedLimit: 0
   Controller: {fileID: 114000011537161064}
   ThrottleIncrease: 10
@@ -673,7 +672,6 @@ MonoBehaviour:
   - {fileID: 11450984}
   ThrottleValue: 0
   Computer: {fileID: 11405560}
-  turningRate: 30
 --- !u!114 &11450984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -846,7 +844,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012465637452}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!92 &92000012034374066
 Behaviour:
   m_ObjectHideFlags: 1
@@ -960,8 +958,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881421b81580f2949a591b4dabc29f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  funcion: {fileID: 170300}
   range: 10
   objective: {fileID: 0}
+  turningRate: 30
 --- !u!124 &124000011277201404
 Behaviour:
   m_ObjectHideFlags: 1
