@@ -1,38 +1,27 @@
 package pruebas_fuzzy;
 
-import fuzzy.obstacleAvoidance;
 //import net.sourceforge.jFuzzyLogic.rule.Rule;
 
-public class prueba_evaluar {
+public class prueba_evaluar2 {
 	
 	
 	public static void main(String[] args) {
-		float dist = 9.1f;
-		float angObj = -53.33f;
-		float angDest = -300f;
+		float dist = 32.0f;
+		float angObj = 157.9f;
+		float angDest = 5.5f;
 		
 		float valorDevuelto;
 		
-		obstacleAvoidance OA = new obstacleAvoidance();
+		obstacleAvoidanceComentado OA = new obstacleAvoidanceComentado();
 		valorDevuelto = OA.evaluar(dist, angObj, angDest);
 		
-		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
+		System.out.println("\n\n valor devuelto shurmanico: " + valorDevuelto );
 		
-		valorDevuelto = -44f;
-		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
 		valorDevuelto= comprobarFloat(valorDevuelto);
 		
-		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto + "\n\n\n" );
+		System.out.println("\n valor devuelto shurmanico: " + valorDevuelto );
 		
-	valorDevuelto = OA.evaluar(1.0f, 53.33f, 20f);
-		
-		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
-		
-		valorDevuelto = -44f;
-		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
-		valorDevuelto= comprobarFloat(valorDevuelto);
-		
-		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto + "\n\n\n" );
+
 		
 		// Show each rule (and degree of support)
    //  	for( Rule r : OA.fis.getFunctionBlock("obstacleAvoidance").getFuzzyRuleBlock("No1").getRules() )

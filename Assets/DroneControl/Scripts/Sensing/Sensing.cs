@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Sensing : MonoBehaviour {
 
+	public GameObject funcion;
+
 	//distancia a la que detecta objetos
 	public float range;
 	public Transform objective;
@@ -19,9 +21,9 @@ public class Sensing : MonoBehaviour {
     //distancia al objetivo
     private float distanciaDest = 0.0f;
     //distancia del obstaculo
-    private float minDistObj = 99.9f;
+    private float minDistObj = 99.9f; 
     //angulo del obstaculo
-    private float anguloObj;
+    private float anguloObj; 		  
     //maxima distancia al objetivo
     private float maxDistaciaDest;
     //angulo del objetivo
@@ -34,6 +36,9 @@ public class Sensing : MonoBehaviour {
 
 	private int layerMask = 1 << 8;
 	private Vector3 crossVector;
+
+	//angulo que debe girar el drone
+	private float anguloGiro = 0.0f;
 
     void Start()
     {
@@ -97,8 +102,30 @@ public class Sensing : MonoBehaviour {
 		//Debug.Log("distacia al objetivo: " + distanciaDest + " a un angulo de: " + anguloDest);
 		//Debug.Log("distacia minima de obstaculo: " + minDistObj + " con a un angulo de: " + anguloObj);
 
-		minDistObj = 99.9f;
+		Debug.Log("distObstaculo: " + minDistObj + " angObstaculo: " + anguloObj + " anguloDest: " + anguloDest);
+		minDistObj = convertirCeroFloat (minDistObj);
+		anguloObj = (convertirCeroFloat (anguloObj)) *  -1.0f;
+		anguloDest = (convertirCeroFloat (anguloDest));
+		Debug.Log("-- Enviado  distObstaculo: " + minDistObj + " angObstaculo: " + anguloObj + " anguloDest: " + anguloDest);
 
+		anguloGiro = funcion.GetComponent<clienteFuzzy> ().Evaluar (minDistObj, anguloObj, anguloDest);
+		Debug.Log ("++ Recibido  angDrone: " + anguloGiro);
+
+
+
+		minDistObj = 99.9f;
+	}
+
+	private float convertirCeroFloat (float inicial){
+		float final;
+
+		if (inicial < 0.1f && inicial > -0.1f) {
+			final = 0.1f;
+		} else {
+			final = inicial ;
+		}
+
+		return final;
 	}
 
 	public float getSpeed()
@@ -133,6 +160,10 @@ public class Sensing : MonoBehaviour {
 	public float getTiempo()
 	{
 		return tiempo;
+	}
+	public float getAnguloGiro()
+	{
+		return anguloGiro;
 	}
 
 }

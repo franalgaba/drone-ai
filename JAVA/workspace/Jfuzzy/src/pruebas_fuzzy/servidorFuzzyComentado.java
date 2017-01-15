@@ -3,6 +3,8 @@ package pruebas_fuzzy;
 import java.io.IOException;
 import java.net.*;
 
+import fuzzy.obstacleAvoidance;
+
 public class servidorFuzzyComentado {
 	
 	public static void main(String[] args) {
@@ -29,9 +31,13 @@ public class servidorFuzzyComentado {
 		
 		DatagramSocket udpSocket;
 		
+		obstacleAvoidance OA;
+		
 		InetAddress clientAddress;
 		int clientPort;
 		try {
+			
+			OA = new obstacleAvoidance();
 			// Create a udp socket for sending and receiving datagrams in serverPort
 			udpSocket = new DatagramSocket(serverPort);
 			
@@ -49,6 +55,7 @@ public class servidorFuzzyComentado {
 				recibido1=new String(packetDistObj.getData());
 				System.out.println("El packetDistObj recibido es string: " + recibido1);
 				distObj = stringToFloat(recibido1);
+				distObj = convertir99(distObj);
 				System.out.println("El packetDistObj recibido es float: " + distObj);
 				
 				// Receive the angObj from client
@@ -75,8 +82,13 @@ public class servidorFuzzyComentado {
 					System.out.println("Las comunicaciones han finalizado");
 					break;}
 				
-				//AQUI SE LLAMARIA A LA FUNCION A EVALUAR FUZZY
-				//angDrone= 1234.5678f;
+				if (angDest != -6789f || angObj == -6789f || distObj == -6789f ){
+					angDrone = OA.evaluar( angDest, angObj, distObj);
+				} 
+			
+				angDrone=comprobarFloat(angDrone);
+					
+
 				
 				System.out.println("Enviando el mensaje al cliente: " + angDrone);
 				buf = (Float.toString(angDrone)).getBytes();
@@ -106,6 +118,31 @@ public class servidorFuzzyComentado {
 			e.printStackTrace();
 		}
 	}
+	
+	private static float convertir99(float distObj) {
+		float out = distObj;
+		
+		if(distObj>29.0f)
+			out= 33.0f;
+		
+		return out;
+	}
+	
+	private static float comprobarFloat(final float angDrone) {
+		float out =0.1f;
+		String convertido = String.valueOf(angDrone);
+		
+		convertido= convertido.replace(".0",".1");	
+		
+		out= stringToFloat(convertido);
+		
+		if ((out %1)==0){
+			out = out + 0.1f;
+		}
+		
+		return out;
+	}
+
 	
 	private static float stringToFloat (final String convertir){
 		float out = 0.0f;

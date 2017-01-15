@@ -77,11 +77,10 @@ GameObject:
   - 54: {fileID: 5440500}
   - 114: {fileID: 11411986}
   - 114: {fileID: 11405560}
-  - 114: {fileID: 114000012191211040}
   - 114: {fileID: 114000010096883370}
-  - 114: {fileID: 114000012464459096}
   - 65: {fileID: 65000010558649202}
   - 114: {fileID: 114000013399219904}
+  - 114: {fileID: 114000013126756034}
   m_Layer: 0
   m_Name: DroneExample
   m_TagString: Untagged
@@ -184,7 +183,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.03000021, z: 0}
+  m_LocalPosition: {x: 5, y: 1.69, z: -71.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -606,7 +605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661c440469c754d41b7c6ab3d3502903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PitchLimit: 15
+  PitchLimit: 5
   RollLimit: 15
   PidThrottle:
     pFactor: 1
@@ -673,8 +672,6 @@ MonoBehaviour:
   - {fileID: 11450984}
   ThrottleValue: 0
   Computer: {fileID: 11405560}
-  anguloGiro: 0
-  turningRate: 30
 --- !u!114 &11450984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -847,7 +844,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012465637452}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!92 &92000012034374066
 Behaviour:
   m_ObjectHideFlags: 1
@@ -913,28 +910,6 @@ MonoBehaviour:
   InvertPitch: 0
   RollCommand: Roll
   InvertRoll: 1
---- !u!114 &114000012191211040
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170300}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e795af4df1acf34a84d797e70a1cf96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000012464459096
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170300}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c8684a54226e474eac8027da1431730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000012820831318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -947,6 +922,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 170300}
+--- !u!114 &114000013126756034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4453153956d1c74ab72af399711be33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientPort: 11000
+  serverPort: 9900
 --- !u!114 &114000013399219904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -970,8 +958,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881421b81580f2949a591b4dabc29f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  funcion: {fileID: 170300}
   range: 10
   objective: {fileID: 0}
+  turningRate: 30
 --- !u!124 &124000011277201404
 Behaviour:
   m_ObjectHideFlags: 1

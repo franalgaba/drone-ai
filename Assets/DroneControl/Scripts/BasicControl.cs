@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 
 public class BasicControl : MonoBehaviour {
 
+	public GameObject funcion;
 
     [Header("Limites")]
     public float speedLimit;
@@ -19,9 +20,9 @@ public class BasicControl : MonoBehaviour {
     [Header("Internal")]
     public ComputerModule Computer;
 
-	//RECIBE EL ANGULO DE JFUZZY
-	public float anguloGiro;
+	private float anguloGiro = 0.0f;
 
+	//velocidad de rotacion
 	public float turningRate = 30f; 
 	// Rotation we should blend towards.
 	private Quaternion _targetRotation;
@@ -31,17 +32,17 @@ public class BasicControl : MonoBehaviour {
 		_targetRotation = Quaternion.Euler(angles);
 	}
 
-
 	void FixedUpdate() {
-		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
-
         Computer.UpdateComputer(Controller.Pitch, Controller.Roll, Controller.Throttle * ThrottleIncrease);
         ThrottleValue = Computer.HeightCorrection;
         ComputeMotors();
         if (Computer != null)
             Computer.UpdateGyro();
         ComputeMotorSpeeds();
+
+		anguloGiro = funcion.GetComponent<Sensing> ().getAnguloGiro();
+		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
     }
 
     private void ComputeMotors()
@@ -55,7 +56,7 @@ public class BasicControl : MonoBehaviour {
             yaw += motor.SideForce;
             i++;
             Transform t = motor.GetComponent<Transform>();
-            rb.AddForceAtPosition(transform.up * motor.UpForce, t.position, ForceMode.Impulse);
+			rb.AddForceAtPosition(transform.up * motor.UpForce, t.position, ForceMode.Impulse);
         }
         rb.AddTorque(Vector3.up * yaw, ForceMode.Force);
     }
@@ -67,7 +68,7 @@ public class BasicControl : MonoBehaviour {
             if (Computer.Gyro.Altitude < 0.1)
                 motor.UpdatePropeller(0.0f);
             else
-                motor.UpdatePropeller(1200.0f);
+                motor.UpdatePropeller(1200.0f); 
         }
     }
 }

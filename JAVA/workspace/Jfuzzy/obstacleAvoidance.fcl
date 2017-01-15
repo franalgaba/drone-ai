@@ -20,11 +20,12 @@ VAR_OUTPUT				// Output variable
 	droneAngle : REAL;      //Motor command
 END_VAR
 
-FUZZIFY obstacleDist		// Fuzzify input variable 'obstacleDist': {'very_close', 'close' , 'far', 'very_far'}
-	TERM very_close := (0, 1) (1, 1) (2.5,0); 
-	TERM close := (1.5, 0) (3,1) (4.5,0);
-	TERM far := (3.5, 0) (5, 1) (6.5,0);
-	TERM very_far := (5.5, 0) (7.5, 1) (10,1);
+FUZZIFY obstacleDist		// Fuzzify input variable 'obstacleDist': {'very_close', 'close' , 'far', 'very_far', 'no_obstacle'}
+	TERM very_close := (0, 1) (4, 1) (7,0); 
+	TERM close := (5, 0) (8,1) (11,0);
+	TERM far := (9, 0) (14, 1) (19,0);
+	TERM very_far := (17, 0) (22, 1) (27,1) (27,0);
+	TERM no_obstacle := (31,0) (32.5,1) (33.5,1) (35,0);
 END_FUZZIFY
 
 FUZZIFY obstacleAng			// Fuzzify input variable 'obstacleAng': { 'far_left', 'left', 'close_left', 'forward', 'close_right', 'right', 'far_right'  }
@@ -68,26 +69,26 @@ RULEBLOCK No1
 
 	
 	 //para añadir pesos with +peso,ejemplo: WITH 0.3
-	RULE    1 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS far_left     THEN droneAngle IS right_very_small ;
-	RULE    2 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS left         THEN droneAngle IS right_very_small ;
-	RULE    3 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS close_left   THEN droneAngle IS right_small ;
-	RULE    4 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS forward      THEN droneAngle IS right_small ;
-	RULE    5 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS close_right  THEN droneAngle IS right_big ;
+	RULE    1 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS far_left     THEN droneAngle IS right_small ;
+	RULE    2 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS left         THEN droneAngle IS right_small ;
+	RULE    3 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS close_left   THEN droneAngle IS right_big ;
+	RULE    4 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS forward      THEN droneAngle IS right_big ;
+	RULE    5 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS close_right  THEN droneAngle IS right_very_big ;
 	RULE    6 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS right        THEN droneAngle IS right_very_big ;
 	RULE    7 : IF obstacleDist IS very_close AND obstacleAng IS   far_left     AND targetAng IS far_right    THEN droneAngle IS right_very_big ;
 	
-	RULE    8 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS far_left     THEN droneAngle IS right_small ;
-	RULE    9 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS left         THEN droneAngle IS right_small ;
-	RULE   10 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS close_left   THEN droneAngle IS right_small ;
-	RULE   11 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS forward      THEN droneAngle IS right_big;
+	RULE    8 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS far_left     THEN droneAngle IS right_big ;
+	RULE    9 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS left         THEN droneAngle IS right_big ;
+	RULE   10 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS close_left   THEN droneAngle IS right_big ;
+	RULE   11 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS forward      THEN droneAngle IS right_very_big;
 	RULE   12 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS close_right  THEN droneAngle IS right_very_big;
 	RULE   13 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS right        THEN droneAngle IS right_very_big;
 	RULE   14 : IF obstacleDist IS very_close AND obstacleAng IS     left       AND targetAng IS far_right    THEN droneAngle IS right_very_big;
 	
-	RULE   15 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS far_left     THEN droneAngle IS right_big;
-	RULE   16 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS left         THEN droneAngle IS right_big;
-	RULE   17 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS close_left   THEN droneAngle IS right_big;
-	RULE   18 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS forward      THEN droneAngle IS right_big;
+	RULE   15 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS far_left     THEN droneAngle IS right_very_big;
+	RULE   16 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS left         THEN droneAngle IS right_very_big;
+	RULE   17 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS close_left   THEN droneAngle IS right_very_big;
+	RULE   18 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS forward      THEN droneAngle IS right_very_big;
 	RULE   19 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS close_right  THEN droneAngle IS right_very_big;
 	RULE   20 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS right        THEN droneAngle IS right_very_big;
 	RULE   21 : IF obstacleDist IS very_close AND obstacleAng IS   close_left   AND targetAng IS far_right    THEN droneAngle IS right_very_big;
@@ -103,84 +104,84 @@ RULEBLOCK No1
 	RULE   29 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS far_left     THEN droneAngle IS left_very_big;
 	RULE   30 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS left         THEN droneAngle IS left_very_big;
 	RULE   31 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS close_left   THEN droneAngle IS left_very_big;
-	RULE   32 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS forward      THEN droneAngle IS left_big;
-	RULE   33 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS close_right  THEN droneAngle IS left_big;
-	RULE   34 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS right        THEN droneAngle IS left_big;
-	RULE   35 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS far_right    THEN droneAngle IS left_big;
+	RULE   32 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS forward      THEN droneAngle IS left_very_big;
+	RULE   33 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS close_right  THEN droneAngle IS left_very_big;
+	RULE   34 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS right        THEN droneAngle IS left_very_big;
+	RULE   35 : IF obstacleDist IS very_close AND obstacleAng IS   close_right  AND targetAng IS far_right    THEN droneAngle IS left_very_big;
 	
 	RULE   36 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS far_left     THEN droneAngle IS left_very_big;
 	RULE   37 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS left         THEN droneAngle IS left_very_big;
 	RULE   38 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS close_left   THEN droneAngle IS left_very_big;
-	RULE   39 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS forward      THEN droneAngle IS left_big;
-	RULE   40 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS close_right  THEN droneAngle IS left_small;
-	RULE   41 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS right        THEN droneAngle IS left_small;
-	RULE   42 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS far_right    THEN droneAngle IS left_small;
+	RULE   39 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS forward      THEN droneAngle IS left_very_big;
+	RULE   40 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS close_right  THEN droneAngle IS left_big;
+	RULE   41 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS right        THEN droneAngle IS left_big;
+	RULE   42 : IF obstacleDist IS very_close AND obstacleAng IS     right      AND targetAng IS far_right    THEN droneAngle IS left_big;
 	
 	RULE   43 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS far_left     THEN droneAngle IS left_very_big;
 	RULE   44 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS left         THEN droneAngle IS left_very_big;
-	RULE   45 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS close_left   THEN droneAngle IS left_big;
-	RULE   46 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS forward      THEN droneAngle IS left_small;
-	RULE   47 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS close_right  THEN droneAngle IS left_small;
-	RULE   48 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS right        THEN droneAngle IS left_very_small;
-	RULE   49 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS far_right    THEN droneAngle IS left_very_small;
+	RULE   45 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS close_left   THEN droneAngle IS left_very_big;
+	RULE   46 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS forward      THEN droneAngle IS left_big;
+	RULE   47 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS close_right  THEN droneAngle IS left_big;
+	RULE   48 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS right        THEN droneAngle IS left_small;
+	RULE   49 : IF obstacleDist IS very_close AND obstacleAng IS   far_right    AND targetAng IS far_right    THEN droneAngle IS left_small;
 	
 	
 	
-	RULE   50 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS far_left     THEN droneAngle IS null;
-	RULE   51 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS left         THEN droneAngle IS null;
-	RULE   52 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS close_left   THEN droneAngle IS right_very_small;
-	RULE   53 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS forward      THEN droneAngle IS right_very_small;
+	RULE   50 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS far_left     THEN droneAngle IS right_very_small;
+	RULE   51 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS left         THEN droneAngle IS right_very_small;
+	RULE   52 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS close_left   THEN droneAngle IS right_small;
+	RULE   53 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS forward      THEN droneAngle IS right_small;
 	RULE   54 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS close_right  THEN droneAngle IS right_big;
 	RULE   55 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS right        THEN droneAngle IS right_big;
 	RULE   56 : IF obstacleDist IS   close    AND obstacleAng IS   far_left     AND targetAng IS far_right    THEN droneAngle IS right_very_big;
 	
-	RULE   57 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS far_left     THEN droneAngle IS right_very_small;
-	RULE   58 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS left         THEN droneAngle IS right_very_small;
-	RULE   59 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS close_left   THEN droneAngle IS right_very_small;
-	RULE   60 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS forward      THEN droneAngle IS right_small;
-	RULE   61 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS close_right  THEN droneAngle IS right_big;
-	RULE   62 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS right        THEN droneAngle IS right_big;
+	RULE   57 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS far_left     THEN droneAngle IS right_small;
+	RULE   58 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS left         THEN droneAngle IS right_small;
+	RULE   59 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS close_left   THEN droneAngle IS right_big;
+	RULE   60 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS forward      THEN droneAngle IS right_big;
+	RULE   61 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS close_right  THEN droneAngle IS right_very_big;
+	RULE   62 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS right        THEN droneAngle IS right_very_big;
 	RULE   63 : IF obstacleDist IS   close    AND obstacleAng IS     left       AND targetAng IS far_right    THEN droneAngle IS right_very_big;
 	
-	RULE   64 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS far_left     THEN droneAngle IS right_small;
-	RULE   65 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS left         THEN droneAngle IS right_small;
-	RULE   66 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS close_left   THEN droneAngle IS right_big;
-	RULE   67 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS forward      THEN droneAngle IS right_big;
+	RULE   64 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS far_left     THEN droneAngle IS right_big;
+	RULE   65 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS left         THEN droneAngle IS right_big;
+	RULE   66 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS close_left   THEN droneAngle IS right_very_big;
+	RULE   67 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS forward      THEN droneAngle IS right_very_big;
 	RULE   68 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS close_right  THEN droneAngle IS right_very_big;
 	RULE   69 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS right        THEN droneAngle IS right_very_big;
 	RULE   70 : IF obstacleDist IS   close    AND obstacleAng IS   close_left   AND targetAng IS far_right    THEN droneAngle IS right_very_big;
 	
-	RULE   71 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS far_left     THEN droneAngle IS left_big;
-	RULE   72 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS left         THEN droneAngle IS left_big;
-	RULE   73 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS close_left   THEN droneAngle IS left_big;
-	RULE   74 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS forward      THEN droneAngle IS left_big;
-	RULE   75 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS close_right  THEN droneAngle IS right_big;
-	RULE   76 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS right        THEN droneAngle IS right_big;
-	RULE   77 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS far_right    THEN droneAngle IS right_big;
+	RULE   71 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS far_left     THEN droneAngle IS left_very_big;
+	RULE   72 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS left         THEN droneAngle IS left_very_big;
+	RULE   73 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS close_left   THEN droneAngle IS left_very_big;
+	RULE   74 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS forward      THEN droneAngle IS left_very_big;
+	RULE   75 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS close_right  THEN droneAngle IS right_very_big;
+	RULE   76 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS right        THEN droneAngle IS right_very_big;
+	RULE   77 : IF obstacleDist IS   close    AND obstacleAng IS    forward     AND targetAng IS far_right    THEN droneAngle IS right_very_big;
 	
 	RULE   78 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS far_left     THEN droneAngle IS left_very_big;
 	RULE   79 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS left         THEN droneAngle IS left_very_big;
 	RULE   80 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS close_left   THEN droneAngle IS left_very_big;
-	RULE   81 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS forward      THEN droneAngle IS left_big;
-	RULE   82 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS close_right  THEN droneAngle IS left_big;
-	RULE   83 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS right        THEN droneAngle IS left_small;
-	RULE   84 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS far_right    THEN droneAngle IS left_small;
+	RULE   81 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS forward      THEN droneAngle IS left_very_big;
+	RULE   82 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS close_right  THEN droneAngle IS left_very_big;
+	RULE   83 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS right        THEN droneAngle IS left_big;
+	RULE   84 : IF obstacleDist IS   close    AND obstacleAng IS   close_right  AND targetAng IS far_right    THEN droneAngle IS left_big;
 	
 	RULE   85 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS far_left     THEN droneAngle IS left_very_big;
-	RULE   86 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS left         THEN droneAngle IS left_big;
-	RULE   87 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS close_left   THEN droneAngle IS left_big;
-	RULE   88 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS forward      THEN droneAngle IS left_small;
-	RULE   89 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS close_right  THEN droneAngle IS left_very_small;
-	RULE   90 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS right        THEN droneAngle IS left_very_small;
-	RULE   91 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS far_right    THEN droneAngle IS left_very_small;
+	RULE   86 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS left         THEN droneAngle IS left_very_big;
+	RULE   87 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS close_left   THEN droneAngle IS left_very_big;
+	RULE   88 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS forward      THEN droneAngle IS left_big;
+	RULE   89 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS close_right  THEN droneAngle IS left_big;
+	RULE   90 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS right        THEN droneAngle IS left_small;
+	RULE   91 : IF obstacleDist IS   close    AND obstacleAng IS     right      AND targetAng IS far_right    THEN droneAngle IS left_small;
 	
 	RULE   92 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS far_left     THEN droneAngle IS left_very_big;
 	RULE   93 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS left         THEN droneAngle IS left_big;
 	RULE   94 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS close_left   THEN droneAngle IS left_big;
-	RULE   95 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS forward      THEN droneAngle IS left_very_small;
-	RULE   96 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS close_right  THEN droneAngle IS left_very_small;
-	RULE   97 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS right        THEN droneAngle IS null;
-	RULE   98 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS far_right    THEN droneAngle IS null;
+	RULE   95 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS forward      THEN droneAngle IS left_small;
+	RULE   96 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS close_right  THEN droneAngle IS left_small;
+	RULE   97 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS right        THEN droneAngle IS left_very_small;
+	RULE   98 : IF obstacleDist IS   close    AND obstacleAng IS   far_right    AND targetAng IS far_right    THEN droneAngle IS left_very_small;
 	
 	
 	
@@ -300,6 +301,13 @@ RULEBLOCK No1
 	RULE  195 : IF obstacleDist IS  very_far  AND obstacleAng IS   far_right    AND targetAng IS right        THEN droneAngle IS right_small;
 	RULE  196 : IF obstacleDist IS  very_far  AND obstacleAng IS   far_right    AND targetAng IS far_right    THEN droneAngle IS right_small;
 	
+	RULE  197 : IF obstacleDist IS  no_obstacle  AND targetAng IS far_left     THEN droneAngle IS left_big;
+	RULE  198 : IF obstacleDist IS  no_obstacle  AND targetAng IS left         THEN droneAngle IS left_small;
+	RULE  199 : IF obstacleDist IS  no_obstacle  AND targetAng IS close_left   THEN droneAngle IS left_very_small;
+	RULE  200 : IF obstacleDist IS  no_obstacle  AND targetAng IS forward      THEN droneAngle IS null;
+	RULE  201 : IF obstacleDist IS  no_obstacle  AND targetAng IS close_right  THEN droneAngle IS right_very_small;
+	RULE  202 : IF obstacleDist IS  no_obstacle  AND targetAng IS right        THEN droneAngle IS right_small;
+	RULE  203 : IF obstacleDist IS  no_obstacle  AND targetAng IS far_right    THEN droneAngle IS right_big;	
 
 	
 END_RULEBLOCK
