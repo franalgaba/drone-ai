@@ -38,17 +38,7 @@ public class Sensing : MonoBehaviour {
 	private Vector3 crossVector;
 
 	//angulo que debe girar el drone
-	private float anguloGiro;
-
-	//velocidad de rotacion
-	public float turningRate = 30f; 
-	// Rotation we should blend towards.
-	private Quaternion _targetRotation;
-	// Call this when you want to turn the object smoothly.
-	public void SetBlendedEulerAngles(Vector3 angles)
-	{
-		_targetRotation = Quaternion.Euler(angles);
-	}
+	private float anguloGiro = 0.0f;
 
     void Start()
     {
@@ -121,8 +111,7 @@ public class Sensing : MonoBehaviour {
 		anguloGiro = funcion.GetComponent<clienteFuzzy> ().Evaluar (minDistObj, anguloObj, anguloDest);
 		Debug.Log ("++ Recibido  angDrone: " + anguloGiro);
 
-		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
+
 
 		minDistObj = 99.9f;
 	}
@@ -171,6 +160,10 @@ public class Sensing : MonoBehaviour {
 	public float getTiempo()
 	{
 		return tiempo;
+	}
+	public float getAnguloGiro()
+	{
+		return anguloGiro;
 	}
 
 }

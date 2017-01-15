@@ -4,6 +4,8 @@ using UnityEngine.Networking;
 
 public class BasicControl : MonoBehaviour {
 
+	public GameObject funcion;
+
     [Header("Limites")]
     public float speedLimit;
 
@@ -18,13 +20,29 @@ public class BasicControl : MonoBehaviour {
     [Header("Internal")]
     public ComputerModule Computer;
 
-	void FixedUpdate() {		
+	private float anguloGiro = 0.0f;
+
+	//velocidad de rotacion
+	public float turningRate = 30f; 
+	// Rotation we should blend towards.
+	private Quaternion _targetRotation;
+	// Call this when you want to turn the object smoothly.
+	public void SetBlendedEulerAngles(Vector3 angles)
+	{
+		_targetRotation = Quaternion.Euler(angles);
+	}
+
+	void FixedUpdate() {
         Computer.UpdateComputer(Controller.Pitch, Controller.Roll, Controller.Throttle * ThrottleIncrease);
         ThrottleValue = Computer.HeightCorrection;
         ComputeMotors();
         if (Computer != null)
             Computer.UpdateGyro();
         ComputeMotorSpeeds();
+
+		anguloGiro = funcion.GetComponent<Sensing> ().getAnguloGiro();
+		_targetRotation = Quaternion.Euler(0.0f, anguloGiro, 0.0f);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
     }
 
     private void ComputeMotors()

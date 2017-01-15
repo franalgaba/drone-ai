@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4389139, g: 0.4870805, b: 0.56728023, a: 1}
+  m_IndirectSpecularColor: {r: 0.43891424, g: 0.4870811, b: 0.5672814, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2318,6 +2318,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1295792654}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1316264571 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013507508828, guid: 6a69533bf9f38764a8bded1158ae15ed,
+    type: 2}
+  m_PrefabInternal: {fileID: 2124706132}
 --- !u!1 &1316510760
 GameObject:
   m_ObjectHideFlags: 0
@@ -3271,6 +3276,23 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000014241205768, guid: 6a69533bf9f38764a8bded1158ae15ed,
+        type: 2}
+      propertyPath: range
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405560, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
+      propertyPath: PitchLimit
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411986, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
+      propertyPath: funcion
+      value: 
+      objectReference: {fileID: 1316264571}
+    - target: {fileID: 11411986, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
+      propertyPath: turningRate
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}

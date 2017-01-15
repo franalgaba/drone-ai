@@ -122,7 +122,7 @@ public class servidorFuzzyComentado {
 	private static float convertir99(float distObj) {
 		float out = distObj;
 		
-		if(distObj>10.0f)
+		if(distObj>12.0f)
 			out= 17.0f;
 		
 		return out;
