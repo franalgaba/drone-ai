@@ -21,10 +21,10 @@ VAR_OUTPUT				// Output variable
 END_VAR
 
 FUZZIFY obstacleDist		// Fuzzify input variable 'obstacleDist': {'very_close', 'close' , 'far', 'very_far', 'no_obstacle'}
-	TERM very_close := (0, 1) (1, 1) (2.5,0); 
-	TERM close := (1.5, 0) (3,1) (4.5,0);
-	TERM far := (3.5, 0) (5, 1) (6.5,0);
-	TERM very_far := (5.5, 0) (7.5, 1) (12,1) (12,0);
+	TERM very_close := (0, 1) (2, 1) (3.5,0); 
+	TERM close := (2.5, 0) (4,1) (5.5,0);
+	TERM far := (4.5, 0) (6, 1) (7.5,0);
+	TERM very_far := (6.5, 0) (8.5, 1) (12,1) (12,0);
 	TERM no_obstacle := (16,0) (16.5,1) (17.5,1) (18,0);
 END_FUZZIFY
 

@@ -56,7 +56,7 @@ public class BasicControl : MonoBehaviour {
             yaw += motor.SideForce;
             i++;
             Transform t = motor.GetComponent<Transform>();
-            rb.AddForceAtPosition(transform.up * motor.UpForce, t.position, ForceMode.Impulse);
+			rb.AddForceAtPosition(transform.up * motor.UpForce, t.position, ForceMode.Impulse);
         }
         rb.AddTorque(Vector3.up * yaw, ForceMode.Force);
     }
