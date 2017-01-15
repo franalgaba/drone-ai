@@ -1,6 +1,7 @@
 package pruebas_fuzzy;
 
 import fuzzy.obstacleAvoidance;
+//import net.sourceforge.jFuzzyLogic.rule.Rule;
 
 public class prueba_evaluar {
 	
@@ -21,7 +22,21 @@ public class prueba_evaluar {
 		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
 		valorDevuelto= comprobarFloat(valorDevuelto);
 		
+		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto + "\n\n\n" );
+		
+	valorDevuelto = OA.evaluar(1.0f, 53.33f, 20f);
+		
 		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
+		
+		valorDevuelto = -44f;
+		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto );
+		valorDevuelto= comprobarFloat(valorDevuelto);
+		
+		System.out.println("\n\n\n valor devuelto shurmanico: " + valorDevuelto + "\n\n\n" );
+		
+		// Show each rule (and degree of support)
+   //  	for( Rule r : OA.fis.getFunctionBlock("obstacleAvoidance").getFuzzyRuleBlock("No1").getRules() )
+    //	   System.out.println(r);
 		
 		
 		

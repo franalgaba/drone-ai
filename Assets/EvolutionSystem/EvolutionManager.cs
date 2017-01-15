@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EvolutionManager : MonoBehaviour {
-
+	/*
 	// Use this for initialization
 	void Start () 
 	{
@@ -49,6 +49,6 @@ public class EvolutionManager : MonoBehaviour {
 	private IEnumerator GenerationEnding()
 	{
 
-	}
+	}*/
 
 }

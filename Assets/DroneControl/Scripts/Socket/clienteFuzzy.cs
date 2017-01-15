@@ -47,9 +47,9 @@ public class clienteFuzzy : MonoBehaviour {
 	public float Evaluar (float distanciaObj, float anguloObj, float anguloDest) {
 		try{
 
-			bufSendDistObj = Encoding.ASCII.GetBytes(distanciaObj.ToString());
-			bufSendAngObj  = Encoding.ASCII.GetBytes(anguloObj.ToString());
-			bufSendAngDest = Encoding.ASCII.GetBytes(anguloDest.ToString());
+			bufSendDistObj = Encoding.ASCII.GetBytes(distanciaObj.ToString("n1"));
+			bufSendAngObj  = Encoding.ASCII.GetBytes(anguloObj.ToString("n1"));
+			bufSendAngDest = Encoding.ASCII.GetBytes(anguloDest.ToString("n1"));
 
 			// Sends a message to the host to which you have connected.
 			udpClient.Send(bufSendDistObj, bufSendDistObj.Length);
