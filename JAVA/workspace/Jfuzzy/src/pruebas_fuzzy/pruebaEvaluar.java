@@ -2,7 +2,7 @@ package pruebas_fuzzy;
 
 //import net.sourceforge.jFuzzyLogic.rule.Rule;
 
-public class prueba_evaluar2 {
+public class pruebaEvaluar {
 	
 	
 	public static void main(String[] args) {

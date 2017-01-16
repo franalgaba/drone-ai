@@ -15,13 +15,13 @@ public class servidorFuzzy {
 		byte[] buf ;
 		String recibido1;
 
-		float distObj;          //distancia objeto-obstaculo cercano
-		float angObj;           //angulo objeto-obstaculo cercano
+		float distObs;          //distancia obstaculo cercano
+		float angObs;           //angulo obstaculo cercano
 		float angDest;          //angulo destino 
 		float angDrone = 1.1f;	//cuanto tiene que girar el drone - comanda al motor	
 		
-		DatagramPacket packetDistObj;
-		DatagramPacket packetAngObj; 
+		DatagramPacket packetDistObs;
+		DatagramPacket packetAngObs; 
 		DatagramPacket packetAngDest;		
 		DatagramPacket packetAng;
 		
@@ -40,40 +40,40 @@ public class servidorFuzzy {
 			System.out.println("Server: waiting for new datagrams...");
 			
 			buf = new byte[300];
-			packetDistObj = new DatagramPacket(buf, buf.length);
-			packetAngObj = new DatagramPacket(buf, buf.length);
+			packetDistObs = new DatagramPacket(buf, buf.length);
+			packetAngObs = new DatagramPacket(buf, buf.length);
 			packetAngDest = new DatagramPacket(buf, buf.length);			
 			
 			while (true) {								
 				// Receive the distObj from client
-				udpSocket.receive(packetDistObj);
-				recibido1=new String(packetDistObj.getData());
-				distObj = stringToFloat(recibido1);
-				distObj = convertir99(distObj);
+				udpSocket.receive(packetDistObs);
+				recibido1=new String(packetDistObs.getData());
+				distObs = stringToFloat(recibido1);
+				distObs = convertir99(distObs);
 								
 				// Receive the angObj from client
-				udpSocket.receive(packetAngObj);
-				recibido1=new String(packetAngObj.getData());
-				angObj = stringToFloat(recibido1);				
+				udpSocket.receive(packetAngObs);
+				recibido1=new String(packetAngObs.getData());
+				angObs = stringToFloat(recibido1);				
 				
-				// Receive the datagram from client
+				// Receive the angDest from client
 				udpSocket.receive(packetAngDest);
 				recibido1=new String(packetAngDest.getData());				
 				angDest = stringToFloat(recibido1);		
 				
 				// Get the address of client from packet
-				clientAddress = packetDistObj.getAddress();
-				clientPort = packetDistObj.getPort();	
+				clientAddress = packetDistObs.getAddress();
+				clientPort = packetDistObs.getPort();	
 				
 				// Salgo del While si el mensaje recibido es  -1000.9
 				//SI SE HACEN GENERACIONES HACER UN WAIT PARA CUANDO SE PARE LA GENERACION
-				if (distObj == menosMil ) { 
+				if (distObs == menosMil ) { 
 					System.out.println("Las comunicaciones han finalizado");
 					break;}
 				
-				//Si no entra se envia el valor de la vez anterior
-				if (angDest != -6789f || angObj == -6789f || distObj == -6789f ){
-						angDrone = OA.evaluar( angDest, angObj, distObj);
+				//Si no entra se envia el valor calculado la vez anterior
+				if (angDest != -6789f || angObs == -6789f || distObs == -6789f ){
+						angDrone = OA.evaluar( angDest, angObs, distObs);
 					} 
 				
 				angDrone=comprobarFloat(angDrone);
@@ -84,10 +84,10 @@ public class servidorFuzzy {
 				packetAng = new DatagramPacket(buf, buf.length, clientAddress,clientPort);
 				udpSocket.send(packetAng);
 				
-				//puede no ser necesario
+				
 				buf = new byte[300];
-				packetDistObj = new DatagramPacket(buf, buf.length);
-				packetAngObj = new DatagramPacket(buf, buf.length);
+				packetDistObs = new DatagramPacket(buf, buf.length);
+				packetAngObs = new DatagramPacket(buf, buf.length);
 				packetAngDest = new DatagramPacket(buf, buf.length);	
 
 				System.out.println("       --------------------------        ");
@@ -134,7 +134,7 @@ public class servidorFuzzy {
 		try{
 			out = Float.parseFloat(convertido);
 		} catch (NumberFormatException e){
-			return out=6789f;
+			return out=-6789f;
 		}
 		
 		return out;		

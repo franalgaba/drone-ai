@@ -1412,9 +1412,9 @@ GameObject:
   - 33: {fileID: 759126151}
   - 65: {fileID: 759126150}
   - 23: {fileID: 759126149}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Derecha
-  m_TagString: Obstaculo
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1480,6 +1480,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 759126147}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &827132347 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 170300, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
+  m_PrefabInternal: {fileID: 2124706132}
+--- !u!114 &827132348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 827132347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d753cd5f53ab3e445b8933bb651b8433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &866073762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,9 +2680,9 @@ GameObject:
   - 33: {fileID: 1562658908}
   - 65: {fileID: 1562658907}
   - 23: {fileID: 1562658906}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Izquierda
-  m_TagString: Obstaculo
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3294,6 +3309,27 @@ Prefab:
       propertyPath: turningRate
       value: 50
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114000010096883370, guid: 6a69533bf9f38764a8bded1158ae15ed,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013399219904, guid: 6a69533bf9f38764a8bded1158ae15ed,
+        type: 2}
+      propertyPath: datos
+      value: 
+      objectReference: {fileID: 827132347}
+    - target: {fileID: 114000013399219904, guid: 6a69533bf9f38764a8bded1158ae15ed,
+        type: 2}
+      propertyPath: datosWrite
+      value: 
+      objectReference: {fileID: 827132347}
+    - target: {fileID: 114000013399219904, guid: 6a69533bf9f38764a8bded1158ae15ed,
+        type: 2}
+      propertyPath: datosSensing
+      value: 
+      objectReference: {fileID: 1316264571}
+    m_RemovedComponents:
+    - {fileID: 114000010096883370, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6a69533bf9f38764a8bded1158ae15ed, type: 2}
   m_IsPrefabParent: 0

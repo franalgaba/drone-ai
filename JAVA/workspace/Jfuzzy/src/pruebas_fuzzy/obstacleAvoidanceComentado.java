@@ -7,10 +7,6 @@ import net.sourceforge.jFuzzyLogic.rule.Variable;
 
 import net.sourceforge.jFuzzyLogic.rule.Rule;
 
-/**
- * Test parsing an FCL file
- * @author pcingola@users.sourceforge.net
- */
 public class obstacleAvoidanceComentado {
 	
 	private FIS fis;

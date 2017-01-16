@@ -15,16 +15,16 @@ public class servidorFuzzyComentado {
 		
 		// Create a buffer where to put a received datagram
 		byte[] buf ;
-
-		float distObj;
-		float angObj;
-		float angDest;
-		//borrar
-		float angDrone = -88.99f;
 		String recibido1;
 		
-		DatagramPacket packetDistObj;
-		DatagramPacket packetAngObj; 
+		float distObs;          //distancia obstaculo cercano
+		float angObs;           //angulo obstaculo cercano
+		float angDest;          //angulo destino 
+		float angDrone = 1.1f;	//cuanto tiene que girar el drone - comanda al motor		
+		
+		
+		DatagramPacket packetDistObs;
+		DatagramPacket packetAngObs; 
 		DatagramPacket packetAngDest;
 		
 		DatagramPacket packetAng;
@@ -43,30 +43,30 @@ public class servidorFuzzyComentado {
 			
 			System.out.println("Server: waiting for new datagrams...");
 			buf = new byte[300];
-			packetDistObj = new DatagramPacket(buf, buf.length);
-			packetAngObj = new DatagramPacket(buf, buf.length);
+			packetDistObs = new DatagramPacket(buf, buf.length);
+			packetAngObs = new DatagramPacket(buf, buf.length);
 			packetAngDest = new DatagramPacket(buf, buf.length);			
 			
 			while (true) {								
 				System.out.println("Esperando a recibir.");
 				
 				// Receive the distObj from client
-				udpSocket.receive(packetDistObj);
-				recibido1=new String(packetDistObj.getData());
-				System.out.println("El packetDistObj recibido es string: " + recibido1);
-				distObj = stringToFloat(recibido1);
-				distObj = convertir99(distObj);
-				System.out.println("El packetDistObj recibido es float: " + distObj);
+				udpSocket.receive(packetDistObs);
+				recibido1=new String(packetDistObs.getData());
+				System.out.println("El packetDistObs recibido es string: " + recibido1);
+				distObs = stringToFloat(recibido1);
+				distObs = convertir99(distObs);
+				System.out.println("El packetDistObs recibido es float: " + distObs);
 				
 				// Receive the angObj from client
-				udpSocket.receive(packetAngObj);
-				recibido1=new String(packetAngObj.getData());
-				System.out.println("El packetAngObj recibido es string: " + recibido1);
-				angObj = stringToFloat(recibido1);
-				System.out.println("El packetAngObj recibido es float: " + angObj);
+				udpSocket.receive(packetAngObs);
+				recibido1=new String(packetAngObs.getData());
+				System.out.println("El packetAngObs recibido es string: " + recibido1);
+				angObs = stringToFloat(recibido1);
+				System.out.println("El packetAngObs recibido es float: " + angObs);
 				
 				
-				// Receive the datagram from client
+				// Receive the angDest from client
 				udpSocket.receive(packetAngDest);
 				recibido1=new String(packetAngDest.getData());
 				System.out.println("El packetAngDest recibido es string: " + recibido1);				
@@ -74,16 +74,17 @@ public class servidorFuzzyComentado {
 				System.out.println("El packetAngDest recibido es: " + angDest);
 				
 				// Get the address of client from packet
-				clientAddress = packetDistObj.getAddress();
-				clientPort = packetDistObj.getPort();	
+				clientAddress = packetDistObs.getAddress();
+				clientPort = packetDistObs.getPort();	
 				
-				// Salgo del While si el mensaje que envio al servidor es null o stop.
-				if (distObj == menosMil ) { 
+				// Salgo del While si el mensaje recibido es  -1000.9
+				//SI SE HACEN GENERACIONES HACER UN WAIT PARA CUANDO SE PARE LA GENERACION
+				if (distObs == menosMil ) { 
 					System.out.println("Las comunicaciones han finalizado");
 					break;}
 				
-				if (angDest != -6789f || angObj == -6789f || distObj == -6789f ){
-					angDrone = OA.evaluar( angDest, angObj, distObj);
+				if (angDest != -6789f || angObs == -6789f || distObs == -6789f ){
+					angDrone = OA.evaluar( angDest, angObs, distObs);
 				} 
 			
 				angDrone=comprobarFloat(angDrone);
@@ -100,20 +101,17 @@ public class servidorFuzzyComentado {
 				System.out.println("Mensaje enviado.");
 				System.out.println("       --------------------------        ");
 				
-				//puede no ser necesario
 				buf = new byte[300];
-				packetDistObj = new DatagramPacket(buf, buf.length);
-				packetAngObj = new DatagramPacket(buf, buf.length);
+				packetDistObs = new DatagramPacket(buf, buf.length);
+				packetAngObs = new DatagramPacket(buf, buf.length);
 				packetAngDest = new DatagramPacket(buf, buf.length);	
 				
-				//SI SE HACEN GENERACIONES HACER UN WAIT PARA CUANDO SE PARE LA GENERACION
-				//POR SI PETA EL 
-				angDrone = 1.1f;
+				
+				
 						
 			}
 			udpSocket.close();
 		}
-		// udpSocket.close();
 		catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -145,7 +143,7 @@ public class servidorFuzzyComentado {
 
 	
 	private static float stringToFloat (final String convertir){
-		float out = 0.0f;
+		float out = 0.1f;
 		String convertido;
 		int posicionDecimal;
 		
@@ -163,8 +161,3 @@ public class servidorFuzzyComentado {
 	}
 	
 }
-
-//comprobar como se envia angDrone
-//comprobar los buffer en varias recepciones y condistintos tamaños para ver como se quedan
-
-//				distObj = ByteBuffer.wrap(packetDistObj.getData()).getFloat();

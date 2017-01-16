@@ -4,7 +4,7 @@ package tcp;
 import java.net.*;
 import java.io.*;
 
-public class servidorEchoMonohiloTCP {
+public class servidorEchoTCP {
 	
 	public static void main(String[] args) {
 				
@@ -48,7 +48,7 @@ public class servidorEchoMonohiloTCP {
 				CS.flush();
 				System.out.println("Mensaje enviado.");
 			}	
-			//cerrar los canales tambien es necesario?? SI.
+			
 			CE.close();
 			CS.close();			
 			
