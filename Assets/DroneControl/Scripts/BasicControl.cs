@@ -22,7 +22,6 @@ public class BasicControl : MonoBehaviour {
 
 	private float anguloGiro = 0.0f;
 
-	//velocidad de rotacion
 	public float turningRate = 30f; 
 	// Rotation we should blend towards.
 	private Quaternion _targetRotation;
@@ -32,6 +31,7 @@ public class BasicControl : MonoBehaviour {
 		_targetRotation = Quaternion.Euler(angles);
 	}
 
+	//actualizamos los motores del drone basandonos en su movimiento
 	void FixedUpdate() {
         Computer.UpdateComputer(Controller.Pitch, Controller.Roll, Controller.Throttle * ThrottleIncrease);
         ThrottleValue = Computer.HeightCorrection;
@@ -45,6 +45,7 @@ public class BasicControl : MonoBehaviour {
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, turningRate * Time.deltaTime);
     }
 
+	//actualizamos las fuerzas aplicadas a cada motor
     private void ComputeMotors()
     {
         float yaw = 0.0f;
@@ -61,6 +62,7 @@ public class BasicControl : MonoBehaviour {
         rb.AddTorque(Vector3.up * yaw, ForceMode.Force);
     }
 
+	//modificamos la velocidad de las helices del drone
     private void ComputeMotorSpeeds()
     {
         foreach (Motor motor in Motors)

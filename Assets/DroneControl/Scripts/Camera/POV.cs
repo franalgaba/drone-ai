@@ -9,6 +9,7 @@ public class POV : MonoBehaviour {
 	private Vector3 pos;
 	private Quaternion rotation;
 
+	//Se encarga de mantener la camara encima del drone con su misma posicion y rotacion
 
 	void Start ()
 	{

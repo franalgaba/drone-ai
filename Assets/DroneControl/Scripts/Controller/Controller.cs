@@ -32,8 +32,13 @@ public class Controller : MonoBehaviour {
 
 	void Update() {
         Throttle = Input.GetAxisRaw(ThrottleCommand) * (InvertThrottle ? -1 : 1);
+
+		//Anulamos la rotacion manual, el controlador borroso se encarga
 		Yaw = /*Input.GetAxisRaw(YawCommand)*/0 * (InvertYaw ? -1 : 1);
+
+		//hacemos que el drone siempre vaya hacia delante
 		Pitch = /*Input.GetAxisRaw(PitchCommand)*/1 * (InvertPitch ? -1 : 1);
+
         Roll = Input.GetAxisRaw(RollCommand) * (InvertRoll ? -1 : 1);
 	}
 

@@ -42,21 +42,24 @@ public class Sensing : MonoBehaviour {
 
     void Start()
     {
+		//cogemos la maxima distancia al destino
         maxDistaciaDest = Vector3.Distance(new Vector3(this.transform.position.x, 0.0f, this.transform.position.z),
                                     new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z));
     }
 
 
-	void FixedUpdate () {	
+	void FixedUpdate () {
+		//obtenemos el tiempo que lleva ejecutandose
 		tiempo = Time.realtimeSinceStartup;
 
 		drone = this.GetComponentInParent<Rigidbody> ();
+		//obtenemos la velocidad del drone
 		speed = drone.velocity.magnitude;
 
+		//obtenemos todos los obstaculos dentro del rango de la esfera que recubre el drone
 		obstaculos = Physics.OverlapSphere(transform.position, range, layerMask);
 
-		//Debug.Log ("numero de obstaculos: " + obstaculos.Length);
-
+		//recorremos todos los obstaculos pero nos quedamos con el que este mas cerca del drone
         int i = 0;
         while( i < obstaculos.Length)
         {
@@ -70,12 +73,12 @@ public class Sensing : MonoBehaviour {
 			i++;
         }
 
+		//obtenemos el angulo del drone respecto del obstaculo
 		if (closestObs != null) 
 		{
 			obstaculo = closestObs.transform;
-			//girar hacia la derecha -> angulo negativo / girar hacia la izquierda -> angulo positivo
-			//misma polaridad que en el paper creo yo
 			anguloObj = Vector3.Angle(-transform.forward, obstaculo.position);
+			//vemos la polaridad del angulo
 			crossVector = Vector3.Cross (-transform.forward, obstaculo.position);
 			if (crossVector.y < 0)
 				anguloObj = -anguloObj;
@@ -83,24 +86,16 @@ public class Sensing : MonoBehaviour {
 		else Debug.Log("obstaculo es null");
 			
 
-        //solo vemos la distancia respectos de los ejes xz, no nos importa la distancia respecto a la altura
+        //comprobamos la distancia actual al destino
         distanciaDest = Vector3.Distance(new Vector3(this.transform.position.x, 0.0f, this.transform.position.z), 
 										 new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z));
 
+		//cogemos el angulo de la direccion del drone respecto de la posicion del destino
         anguloDest = Vector3.Angle(transform.forward, objective.position);
 		crossVector = Vector3.Cross (transform.forward, objective.position);
-		//girar hacia la derecha -> angulo positivo / girar hacia la izquierda -> angulo negativo
-		//misma polaridad que en el paper creo yo
 		if (crossVector.y < 0)
 			anguloDest = -anguloDest;
 
-
-		//Todo funciona como debe
-		//Debug.Log("maxima distancia del objetivo: " + maxDistaciaDest);
-		//La velocidad maxima es 1.35 m/s, comprobado empiricamente, es lo maximo que puede llegar en linea recta hasta el final
-		//Debug.Log("velocidad en m/s: " + speed);
-		//Debug.Log("distacia al objetivo: " + distanciaDest + " a un angulo de: " + anguloDest);
-		//Debug.Log("distacia minima de obstaculo: " + minDistObj + " con a un angulo de: " + anguloObj);
 
 		Debug.Log("distObstaculo: " + minDistObj + " angObstaculo: " + anguloObj + " anguloDest: " + anguloDest);
 		minDistObj = convertirCeroFloat (minDistObj);
@@ -112,7 +107,7 @@ public class Sensing : MonoBehaviour {
 		Debug.Log ("++ Recibido  angDrone: " + anguloGiro);
 
 
-
+		//reiniciamos la distancia minima
 		minDistObj = 99.9f;
 	}
 

@@ -19,11 +19,12 @@ public class Fitness : MonoBehaviour {
 	{
 		if (collision.collider.tag  == "Obstaculo") 
 		{
-			//penalizar por cada obstaculo que se choque= 0;
+			//aumentamos el numero de colisiones si hay un choque con un obstaculo
 			numColision++;
 		}
 		if (collision.collider.tag == "Objetivo") 
 		{
+			//si chocamos con el objetivo se da por finalizada la simulacion generando un archivo .txt con los resultados
 			this.gameObject.SetActive(false);
 			Debug.Log("FIN DEL JUEGO");
 			datosWrite.GetComponent<writeResultados>().setColision(numColision);
