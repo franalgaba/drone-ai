@@ -15,11 +15,11 @@ public class prueba_evaluar2 {
 		obstacleAvoidanceComentado OA = new obstacleAvoidanceComentado();
 		valorDevuelto = OA.evaluar(dist, angObj, angDest);
 		
-		System.out.println("\n\n valor devuelto shurmanico: " + valorDevuelto );
+		System.out.println("\n\n valor devuelto  " + valorDevuelto );
 		
 		valorDevuelto= comprobarFloat(valorDevuelto);
 		
-		System.out.println("\n valor devuelto shurmanico: " + valorDevuelto );
+		System.out.println("\n valor devuelto: " + valorDevuelto );
 		
 
 		
