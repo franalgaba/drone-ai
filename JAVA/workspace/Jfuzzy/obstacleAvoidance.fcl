@@ -48,7 +48,7 @@ FUZZIFY targetAng			// Fuzzify input variable 'targetAng': { 'far_left', 'left',
 	TERM far_right := (60, 0) (75, 1) (90,1); 
 END_FUZZIFY
 
-DEFUZZIFY droneAngle			// Defzzzify output variable 'droneAngle' : {'left_very_big', 'left_big', 'left_small', 'left_very_small', 'null', 'right_very_small', 'right_small', 'right_big', 'right_very_big'  }
+DEFUZZIFY droneAngle			// Defuzzzify output variable 'droneAngle' : {'left_very_big', 'left_big', 'left_small', 'left_very_small', 'null', 'right_very_small', 'right_small', 'right_big', 'right_very_big'  }
 	TERM left_very_big := (-90,1) (-70,1) (-52.5,0);
 	TERM left_big := (-70,0) (-52.5,1) (-35,0);
 	TERM left_small := (-52.5,0) (-35,1) (-17.5,0);
@@ -59,7 +59,7 @@ DEFUZZIFY droneAngle			// Defzzzify output variable 'droneAngle' : {'left_very_b
 	TERM right_big := (35,0) (52.5,1) (70,0);
 	TERM right_very_big:= (52.5,0) (70,1) (90,1);	
 	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
-	DEFAULT := 0;		// Default value is 8 (if no rule activates defuzzifier)
+	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 
 RULEBLOCK No1
