@@ -6,9 +6,9 @@ public class pruebaEvaluar {
 	
 	
 	public static void main(String[] args) {
-		float dist = 10.0f;
-		float angObj = 100.9f;
-		float angDest = 55.5f;
+		float dist = 27.0f;
+		float angObj = 75f;
+		float angDest = 90f;
 		
 		float valorDevuelto;
 		
