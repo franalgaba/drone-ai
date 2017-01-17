@@ -7,6 +7,12 @@ using System.IO;
 using System.Text;
 using System;
 
+/**
+ * Clase que conecta con el servidor mediante el protocolo UDP
+ * y posee un metodo que es llamado desde la clase sensing
+ * para enviar y recibir los datos necesarios
+ * para que funcione el controlador borroso
+ * */
 public class clienteFuzzy : MonoBehaviour {
 
 	private UdpClient udpClient;
@@ -42,8 +48,7 @@ public class clienteFuzzy : MonoBehaviour {
 		}
 	
 	}
-
-	//OJO SIEMPRE QUE SE LLAME A ESTA FUNCION SE TIENEN QUE PONER LOS ARGUMENTOS CON ALGUN VALOR DECIMAL EJEMPLO XXX.1
+		
 	public float Evaluar (float distanciaObj, float anguloObj, float anguloDest) {
 		try{
 

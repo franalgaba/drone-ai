@@ -4,6 +4,12 @@ using System.Collections;
 using System;
 using System.IO;
 
+/**
+ * Clase encargada de crear un fichero.
+ * Posee dos metodos que son llamados desde la clase sensing
+ * y se utilizan para escribir el numero de colisiones 
+ * y el tiempo tardado
+ * */
 public class writeResultados : MonoBehaviour {
 
 	// Create an instance of StreamWriter to write text to a file.

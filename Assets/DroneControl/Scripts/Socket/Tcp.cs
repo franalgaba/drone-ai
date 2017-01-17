@@ -4,7 +4,10 @@ using System.Collections;
 using System.Net.Sockets;
 using System.IO;
 using System;
-
+/**
+ * Clase para probar el rendimiento del protocolo TCP
+ * es un cliente TCP
+ * */
 public class Tcp : MonoBehaviour {
 
 	private TcpClient tcpClient;
